@@ -4,8 +4,8 @@ import gc
 class cache_env():
     def __init__(self, cache_size, requests_list, DEBUG=False, reward_dis_fac=0.9):
         #short- medium- long-term
-        self.terms=np.array([10,100,1000])
-        #self.terms=np.array([10,50,100,250,500,750,1000])
+        #self.terms=np.array([10,100,1000])
+        self.terms=np.array([10,50,100,250,500,750,1000])
         #a list include all the requests
         self.all_requests = requests_list
         self.cache_size = cache_size
@@ -88,10 +88,10 @@ class cache_env():
             next_state, done = self.get_next_state()
 
         #reward_error = (reward - self.previous_reward) / 10 * reward
-        #reward_error = np.tanh((reward - self.previous_reward)) * reward
+        reward_error = np.tanh((reward - self.previous_reward)) * reward
         #reward_error = reward - self.previous_reward
-        #self.previous_reward = reward
-        return next_state, reward, done
+        self.previous_reward = reward
+        return next_state, reward_error, done
     
     #reward = next req hit count[0,1] + discount factor * next 100 req hit count[0,100]
     def get_reward(self):

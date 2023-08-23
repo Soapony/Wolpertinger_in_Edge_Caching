@@ -5,7 +5,7 @@ import sys
 import gc
 
 def do_one_train(c_size):
-    max_episodes = 8
+    max_episodes = 10
     cache_size = c_size
     tau = 0.001
     knn = 0.2
