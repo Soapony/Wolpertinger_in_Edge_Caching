@@ -11,10 +11,10 @@ def do_one_train(c_size):
     knn = 0.2
     reward_fac = 0.9
     gamma = 0.9
-    zipf = gen_zipf(1.3, 5000, 5000)
-    #requests_list = zipf.load_request("training_data.txt")
+    zipf = gen_zipf(1.3, 1000, 5000)
+    requests_list = zipf.load_request("training_data.txt")
     #requests_list = zipf.load_request("training_data_uniform.txt")
-    requests_list = zipf.load_request("training_data_varPopulation.txt")
+    #requests_list = zipf.load_request("training_data_varPopulation.txt")
     #requests_list = zipf.load_request("training_data2.txt")
     env = cache_env(cache_size, requests_list,False,reward_fac)
     drl_wol = wolpertinger(env, cache_size, False,knn,gamma,tau)
