@@ -51,11 +51,13 @@ class actor_network:
         output_init = tf.random_uniform_initializer(minval=-0.003, maxval=0.003)
 
         input_state = Input(shape=self.state_shape)
-        L1 = Dense(self.l_units512, name="Actor_L1", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(input_state)
-        L2 = Dense(self.l_units256, name="Actor_L2", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L1)
-        L3 = Dense(self.l_units128, name="Actor_L3", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L2)
-        L4 = Dense(self.l_units64, name="Actor_L4", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L3)
-        output = Dense(1, name="Actor_Out", activation='tanh', kernel_initializer=output_init)(L4)
+        L1 = Dense(self.l_units2048, name="Actor_L1", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(input_state)
+        L2 = Dense(self.l_units1024, name="Actor_L2", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L1)
+        L3 = Dense(self.l_units512, name="Actor_L3", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L2)
+        L4 = Dense(self.l_units256, name="Actor_L4", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L3)
+        L5 = Dense(self.l_units128, name="Actor_L5", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L4)
+        L6 = Dense(self.l_units64, name="Actor_L6", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L5)
+        output = Dense(1, name="Actor_Out", activation='tanh', kernel_initializer=output_init)(L6)
         model = Model(inputs=input_state, outputs=output)
         return model
     

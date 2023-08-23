@@ -57,7 +57,7 @@ class wolpertinger:
                 cur_hit_rate = self.env.get_hit_rate()
                 self.hit_rate.append(cur_hit_rate)
                 print("episode:"+str(episodes)+" total rewards:"+str(total_rewards)+" hit rate:"+str(cur_hit_rate))
-                """
+                
                 f = open("result/hit_history.txt","a")
                 f.write(str(self.env.get_hit_history())+"\n")
                 f.close()
@@ -70,7 +70,7 @@ class wolpertinger:
                 f3 = open("result/act_reward.txt","a")
                 f3.write(str(self.actual_rewards)+"\n")
                 f3.close()
-                """
+                
 
                 self.env.hit_history.clear()
                 self.reward_error.clear()
@@ -109,10 +109,10 @@ class wolpertinger:
             #if abs(reward_error) > 50:
             #    self.ddpg.actor.reset_epsilon()
 
-            #self.predict_rewards.append(predict_reward)
-            #self.actual_rewards.append(reward)
-            #self.reward_error.append((reward_error))
-            #print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward_error, self.env.get_hit_rate())
+            self.predict_rewards.append(predict_reward)
+            self.actual_rewards.append(reward)
+            self.reward_error.append((reward_error))
+            print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward, self.env.get_hit_rate())
 
             if self.DEBUG:
                 print("============================DEBUG===================================")
