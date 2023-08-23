@@ -87,8 +87,8 @@ class cache_env():
             next_state, done = self.get_next_state()
 
         #reward_error = (reward - self.previous_reward) / 10 * reward
-        reward_error = np.tanh((reward - self.previous_reward)) * reward
-        #reward_error = reward - self.previous_reward
+        #reward_error = np.tanh((reward - self.previous_reward)) * reward
+        reward_error = reward - self.previous_reward
         self.previous_reward = reward
         return next_state, reward_error, done
     
