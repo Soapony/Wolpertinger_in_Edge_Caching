@@ -83,18 +83,18 @@ if __name__ == "__main__":
     f.close()
     """
     
-    f = open("result/reward_error.txt","r")
+    f = open("result/hit_history.txt","r")
     figure, axis = plt.subplots(1,2,figsize=(15,10))
     lines = f.readlines()
-    errors = []
+    history = []
     for line in lines:
         length = len(line)
         tmp = line[1:length-2]
         tmp = tmp.split(", ")
         tmp = [float(x) for x in tmp]
-        errors = errors + tmp
-    x = np.arange(len(errors))
-    axis[0].plot(x,errors,label="reward_error")
+        history = history + tmp
+    x = np.arange(len(history))
+    axis[0].plot(x,history,label="hit_history")
     axis[0].legend()
     f.close()
     f1 = open("result/act_reward.txt","r")
@@ -120,13 +120,13 @@ if __name__ == "__main__":
     x = np.arange(len(predict_reward))
     axis[1].plot(x,predict_reward,label="predict")
     axis[1].legend()
-    plt.savefig("result/reward_error.png")
+    plt.savefig("result/hitrate_reward.png")
     plt.close()
     f1.close()
     f2.close()
     
 
-    #plot hit history
+    """
     f3 = open("result/hit_history.txt","r")
     lines = f3.readlines()
     history = []
@@ -138,7 +138,7 @@ if __name__ == "__main__":
         history = history + tmp
     x = np.arange(len(history))
     plt.plot(x,history,label="DRL")
-    """
+
     f4 = open("result/compared_algo.txt","r")
     lines2 = f4.readlines()
     lfu = lines2[0]
@@ -163,8 +163,9 @@ if __name__ == "__main__":
     plt.plot(x,lru,label="LRU")
     plt.plot(x,fifo,label="FIFO")
     f4.close()
-    """
+    
     plt.legend()
     plt.savefig("result/hit_history.png")
     plt.close()
     f3.close()
+    """

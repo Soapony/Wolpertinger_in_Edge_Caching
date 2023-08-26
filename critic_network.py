@@ -11,6 +11,7 @@ class critic_network:
     def __init__(
             self,
             state_shape,
+            framework="new",
             DEBUG=False,
             lr=1e-3
     ):
@@ -25,15 +26,16 @@ class critic_network:
         self.l_units2048 = 2048
         self.DEBUG = DEBUG
 
-        self.model = self.create_critic_network()
+        if framework == "paper":
+            self.model = self.create_paper_critic_network()
+        else:
+            self.model = self.create_critic_network()
         self.optimizer = Adam(learning_rate=lr)
         if self.DEBUG:
             print("============================DEBUG===================================")
             print("Critic network initialization summry:")
             print("learning rate = ",self.learning_rate)
             print("state_shape = ",self.state_shape)
-            print("layer1 units = ",self.layer1_units)
-            print("layer2 units = ",self.layer2_units)
             print("model summary:")
             print(self.model.summary())
     
@@ -56,6 +58,24 @@ class critic_network:
         L4_concat = Dense(self.l_units32, name="critic_concat_L4", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L3_concat)
 
         output = Dense(1, name="critic_out", activation='linear')(L4_concat)
+        model = Model(inputs=[input_state, input_action], outputs=output)
+
+        return model
+    
+    def create_paper_critic_network(self):
+        input_state = Input(shape=[self.state_shape[0]])
+        input_action = Input(shape=[1])
+
+        L1_state = Dense(self.l_units64, name="critic_state_L1", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(input_state)
+        L2_state = Dense(self.l_units32, name="critic_state_L2", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L1_state)
+        
+        L1_action = Dense(self.l_units32, name="critic_action_L1")(input_action)
+
+        concat = Concatenate()([L2_state, L1_action])
+        L1_concat = Dense(self.l_units32, name="critic_concat_L1", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(concat)
+        L2_concat = Dense(self.l_units32, name="critic_concat_L2", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L1_concat)
+
+        output = Dense(1, name="critic_out", activation='linear')(L1_concat)
         model = Model(inputs=[input_state, input_action], outputs=output)
 
         return model

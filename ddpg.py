@@ -12,12 +12,12 @@ tf.keras.backend.set_floatx('float64')
 
 #this class implements ddpg functionality which create actor-critic netowrk and also target network and brain for replay
 class ddpg:
-    def __init__(self, state_shape, cache_size, DEBUG=False, gamma=0.9, tau=0.001):
+    def __init__(self, state_shape, cache_size, model="new", DEBUG=False, gamma=0.9, tau=0.001):
 
-        self.actor = actor_network(state_shape, cache_size,DEBUG)
-        self.actor_t = actor_network(state_shape, cache_size,DEBUG)
-        self.critic = critic_network(state_shape,DEBUG)
-        self.critic_t = critic_network(state_shape,DEBUG)
+        self.actor = actor_network(state_shape, cache_size, model, DEBUG)
+        self.actor_t = actor_network(state_shape, cache_size, model, DEBUG)
+        self.critic = critic_network(state_shape, model, DEBUG)
+        self.critic_t = critic_network(state_shape, model, DEBUG)
         self.brain = memory(DEBUG)
         self.gamma = gamma
         self.cache_size = cache_size

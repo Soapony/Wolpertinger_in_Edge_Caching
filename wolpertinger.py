@@ -4,7 +4,7 @@ import gc
 
 #this class implements wolpertinger architecture
 class wolpertinger:
-    def __init__(self, cache_env, cache_size, DEBUG=False, KNN_fraction = 0.2, gamma = 0.9, tau=0.001):
+    def __init__(self, cache_env, cache_size, model="new", DEBUG=False, KNN_fraction = 0.2, gamma = 0.9, tau=0.001):
         self.env = cache_env
         self.KNN_fraction = KNN_fraction
         self.cache_size = cache_size
@@ -12,12 +12,11 @@ class wolpertinger:
         self.state_shape = self.env.get_state_shape()
         self.DEBUG = DEBUG
         self.hit_rate=[]
-        self.reward_error=[]
         self.predict_rewards=[]
         self.actual_rewards=[]
         self.tau = tau
 
-        self.ddpg = ddpg(self.state_shape, self.cache_size,self.DEBUG, gamma, self.tau)
+        self.ddpg = ddpg(self.state_shape, self.cache_size, model, self.DEBUG, gamma, self.tau)
         self.knn = knn(self.cache_size, self.K,self.DEBUG)
 
         if self.DEBUG:
@@ -39,8 +38,6 @@ class wolpertinger:
             print(current_state)
             print("done = ",done)
 
-        f1 = open("result/reward_error.txt","w")
-        f1.close()
         f2 = open("result/pre_reward.txt","w")
         f2.close()
         f3 = open("result/act_reward.txt","w")
@@ -61,22 +58,16 @@ class wolpertinger:
                 f = open("result/hit_history.txt","a")
                 f.write(str(self.env.get_hit_history())+"\n")
                 f.close()
-                f1 = open("result/reward_error.txt","a")
-                f1.write(str(self.reward_error)+"\n")
-                f1.close()
                 f2 = open("result/pre_reward.txt","a")
                 f2.write(str(self.predict_rewards)+"\n")
                 f2.close()
                 f3 = open("result/act_reward.txt","a")
                 f3.write(str(self.actual_rewards)+"\n")
                 f3.close()
-                
 
                 self.env.hit_history.clear()
-                self.reward_error.clear()
                 self.predict_rewards.clear()
                 self.actual_rewards.clear()
-                #self.ddpg.actor.reset_epsilon()
                 
                 total_rewards, done = 0.0, False
                 current_state, done = self.env.reset()
@@ -106,12 +97,9 @@ class wolpertinger:
 
             next_state, reward, done = self.env.step(best_action)
             reward_error = predict_reward - reward
-            #if abs(reward_error) > 50:
-            #    self.ddpg.actor.reset_epsilon()
 
             self.predict_rewards.append(predict_reward)
             self.actual_rewards.append(reward)
-            self.reward_error.append((reward_error))
             print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward, self.env.get_hit_rate())
 
             if self.DEBUG:
@@ -139,7 +127,6 @@ class wolpertinger:
     
     def online_learning(self,env):
         self.env = env
-        self.reward_error.clear()
         self.predict_rewards.clear()
         self.actual_rewards.clear()
 
@@ -160,7 +147,6 @@ class wolpertinger:
 
             self.predict_rewards.append(predict_reward)
             self.actual_rewards.append(reward)
-            self.reward_error.append((reward_error))
             print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward_error, self.env.get_hit_rate())
 
             self.ddpg.brain.remember(current_state, best_action, reward, next_state, done)
@@ -175,9 +161,6 @@ class wolpertinger:
         f = open("result/hit_history.txt","w")
         f.write(str(self.env.get_hit_history())+"\n")
         f.close()
-        f1 = open("result/reward_error.txt","w")
-        f1.write(str(self.reward_error)+"\n")
-        f1.close()
         f2 = open("result/pre_reward.txt","w")
         f2.write(str(self.predict_rewards)+"\n")
         f2.close()
@@ -195,7 +178,6 @@ class wolpertinger:
         del self.state_shape
         del self.DEBUG
         del self.hit_rate
-        del self.reward_error
         del self.predict_rewards
         del self.actual_rewards
         self.ddpg.clean()

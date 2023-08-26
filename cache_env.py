@@ -2,16 +2,17 @@ import numpy as np
 import gc
 
 class cache_env():
-    def __init__(self, cache_size, requests_list, DEBUG=False, reward_dis_fac=0.9):
+    def __init__(self, cache_size, requests_list, model="new", DEBUG=False, reward_dis_fac=0.9):
         #short- medium- long-term
-        #self.terms=np.array([10,100,1000])
-        self.terms=np.array([10,50,100,250,500,750,1000])
+        self.terms=np.array([10,100,1000])
+        #self.terms=np.array([10,50,100,250,500,750,1000])
         #a list include all the requests
         self.all_requests = requests_list
         self.cache_size = cache_size
         self.state_shape = (len(self.terms)*(cache_size+1),)
         self.reward_discount_factor = reward_dis_fac
         self.DEBUG = DEBUG
+        self.model = model
 
         #feature space dict structure:
         #{unique content id: [short f, medium f, long f],
@@ -70,7 +71,7 @@ class cache_env():
             print(self.feature_space)
             print("cache hit rate = ",self.cache_hit_rate)
         
-        reward = 0.
+        tmp_reward = 0.
         done = False
         next_state = []
         if(self.cur_req_ind == self.last_req_ind):
@@ -83,15 +84,20 @@ class cache_env():
             next_state = self.get_state_space()
             #no more requests so reward = 0
         else:
-            reward = self.get_reward()
+            tmp_reward = self.get_reward()
             self.cur_req_ind += 1
             next_state, done = self.get_next_state()
 
-        #reward_error = (reward - self.previous_reward) / 10 * reward
-        #reward_error = np.tanh((reward - self.previous_reward)) * reward
-        reward_error = reward - self.previous_reward
-        self.previous_reward = reward
-        return next_state, reward_error, done
+        reward = 0.
+        if self.model == "paper":
+            reward = tmp_reward
+        else:
+            #reward = (tmp_reward - self.previous_reward) / 10 * tmp_reward
+            #reward = np.tanh((tmp_reward - self.previous_reward)) * tmp_reward
+            reward = tmp_reward - self.previous_reward
+            self.previous_reward = tmp_reward
+
+        return next_state, reward, done
     
     #reward = next req hit count[0,1] + discount factor * next 100 req hit count[0,100]
     def get_reward(self):
