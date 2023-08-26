@@ -37,14 +37,14 @@ class wolpertinger:
             print("In wolpertinger -> offline_train -> after env.reset() -> current_state:")
             print(current_state)
             print("done = ",done)
-
+        """
         f2 = open("result/pre_reward.txt","w")
         f2.close()
         f3 = open("result/act_reward.txt","w")
         f3.close()
         f = open("result/hit_history.txt","w")
         f.close()
-
+        """
         while(episodes < max_episodes):
             if self.DEBUG:
                 print("============================DEBUG===================================")
@@ -54,7 +54,7 @@ class wolpertinger:
                 cur_hit_rate = self.env.get_hit_rate()
                 self.hit_rate.append(cur_hit_rate)
                 print("episode:"+str(episodes)+" total rewards:"+str(total_rewards)+" hit rate:"+str(cur_hit_rate))
-                
+                """
                 f = open("result/hit_history.txt","a")
                 f.write(str(self.env.get_hit_history())+"\n")
                 f.close()
@@ -64,7 +64,7 @@ class wolpertinger:
                 f3 = open("result/act_reward.txt","a")
                 f3.write(str(self.actual_rewards)+"\n")
                 f3.close()
-
+                """
                 self.env.hit_history.clear()
                 self.predict_rewards.clear()
                 self.actual_rewards.clear()
@@ -96,11 +96,11 @@ class wolpertinger:
                 print("In wolpertinger -> offline_train -> index & best_action:",index,best_action)
 
             next_state, reward, done = self.env.step(best_action)
-            reward_error = predict_reward - reward
+            #reward_error = predict_reward - reward
 
-            self.predict_rewards.append(predict_reward)
-            self.actual_rewards.append(reward)
-            print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward, self.env.get_hit_rate())
+            #self.predict_rewards.append(predict_reward)
+            #self.actual_rewards.append(reward)
+            #print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward, self.env.get_hit_rate())
 
             if self.DEBUG:
                 print("============================DEBUG===================================")
