@@ -5,7 +5,7 @@ import sys
 import gc
 
 def do_one_train(cache_size, model):
-    max_episodes = 8
+    max_episodes = 5
     tau = 0.001
     knn = 0.2
     reward_fac = 0.9
