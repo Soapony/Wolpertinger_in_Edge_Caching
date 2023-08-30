@@ -117,6 +117,46 @@ class gen_zipf():
             f.close()
         
         return requests
+
+    def generate_var_normal_distrib(self, new_num_files = 500, round = 6, save_name = None):
+        sd = new_num_files
+
+        if save_name is not None:
+            f = open(save_name,"w")
+            f.close()
+
+        requests=[]
+
+        for i in range(round):
+            total_files = self.num_files + i * new_num_files
+            mean = total_files - new_num_files / 2
+            
+            normal_sample = np.round(np.random.normal(mean,sd,10000)).astype(int)
+            for j in range(len(normal_sample)):
+                if normal_sample[j] > total_files:
+                    normal_sample[j] = total_files - (normal_sample[j] - total_files)
+            requests = requests + normal_sample.tolist()
+            
+            if self.DEBUG or True:
+                print("============================DEBUG===================================")
+                print("In gen_zipf -> generate_request_var_normal_distrib")
+                count = np.bincount(normal_sample)
+                k = np.arange(max(normal_sample)+1)
+                plt.bar(k,count)
+                plt.show()
+                plt.close()
+            
+            if(save_name is not None):
+                f=open(save_name, "a")
+                for request in normal_sample:
+                    f.write(str(request)+" ")
+                f.close()
+        if save_name is not None:
+            f=open(save_name,"a")
+            f.write("\n")
+            f.close()
+
+        return requests
     
     def load_request(self,file_name):
         f = open(file_name,"r")

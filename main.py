@@ -10,17 +10,18 @@ def do_one_train(cache_size, model):
     knn = 0.2
     reward_fac = 0.9
     gamma = 0.9
-    zipf = gen_zipf(1.3, 1000, 5000)
-    requests_list = zipf.load_request("training_data.txt")
+    zipf = gen_zipf(1.3, 10000, 5000)
+    #requests_list = zipf.load_request("training_data.txt")
     #requests_list = zipf.load_request("training_data_uniform.txt")
     #requests_list = zipf.load_request("training_data_varPopulation.txt")
     #requests_list = zipf.load_request("training_data2.txt")
+    requests_list = zipf.load_request("training_data_varNormal.txt")
     env = cache_env(cache_size, requests_list, model, False, reward_fac)
     drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
-    hit_rate = drl_wol.offline_train(max_episodes)
+    #hit_rate = drl_wol.offline_train(max_episodes)
     
-    requests_list = zipf.load_request("training_data_varPopulation.txt")
-    env = cache_env(cache_size, requests_list, model, False, reward_fac)
+    #requests_list = zipf.load_request("training_data_varPopulation.txt")
+    #env = cache_env(cache_size, requests_list, model, False, reward_fac)
     hit_rate = drl_wol.online_learning(env)
 
     env.clean()
