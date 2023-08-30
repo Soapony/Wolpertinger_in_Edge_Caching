@@ -131,13 +131,13 @@ class gen_zipf():
             total_files = self.num_files + i * new_num_files
             mean = total_files - new_num_files / 2
             
-            normal_sample = np.round(np.random.normal(mean,sd,10000)).astype(int)
+            normal_sample = np.round(np.random.normal(mean,sd,5000)).astype(int)
             for j in range(len(normal_sample)):
                 if normal_sample[j] > total_files:
                     normal_sample[j] = total_files - (normal_sample[j] - total_files)
             requests = requests + normal_sample.tolist()
             
-            if self.DEBUG or True:
+            if self.DEBUG:
                 print("============================DEBUG===================================")
                 print("In gen_zipf -> generate_request_var_normal_distrib")
                 count = np.bincount(normal_sample)

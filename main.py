@@ -16,6 +16,7 @@ def do_one_train(cache_size, model):
     #requests_list = zipf.load_request("training_data_varPopulation.txt")
     #requests_list = zipf.load_request("training_data2.txt")
     requests_list = zipf.load_request("training_data_varNormal.txt")
+    #requests_list = zipf.generate_var_normal_distrib(save_name = "training_data_varNormal.txt")
     env = cache_env(cache_size, requests_list, model, False, reward_fac)
     drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
     #hit_rate = drl_wol.offline_train(max_episodes)
