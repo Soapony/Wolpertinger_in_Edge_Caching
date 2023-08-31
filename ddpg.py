@@ -50,12 +50,35 @@ class ddpg:
         self.critic.model.save_weights('offline_model/critic.h5')
         print("DEBUG    WEIGHTS SAVED")
     
+    def save_model_paper(self):
+        print("DEBUG    SAVING WEIGHTS")
+        print("DEBUG    print actor and critic summary")
+        print(self.actor.model.summary())
+        print(self.critic.model.summary())
+        self.actor.model.save_weights('offline_model/actor_paper.h5')
+        self.critic.model.save_weights('offline_model/critic_paper.h5')
+        print("DEBUG    WEIGHTS SAVED")
+    
     def load_model(self):
         print("DEBUG    LOADING WEIGHTS")
         self.actor.model.load_weights('offline_model/actor.h5')
         self.actor_t.model.load_weights('offline_model/actor.h5')
         self.critic.model.load_weights('offline_model/critic.h5')
         self.critic.model.load_weights('offline_model/critic.h5')
+        print("DEBUG    WEIGHTS LOADED")
+        print("print actor and critic summary")
+        print(self.actor.model.summary())
+        print(self.critic.model.summary())
+        print("print target actor and critic summary")
+        print(self.actor_t.model.summary())
+        print(self.critic_t.model.summary())
+    
+    def load_model_paper(self):
+        print("DEBUG    LOADING WEIGHTS")
+        self.actor.model.load_weights('offline_model/actor_paper.h5')
+        self.actor_t.model.load_weights('offline_model/actor_paper.h5')
+        self.critic.model.load_weights('offline_model/critic_paper.h5')
+        self.critic.model.load_weights('offline_model/critic_paper.h5')
         print("DEBUG    WEIGHTS LOADED")
         print("print actor and critic summary")
         print(self.actor.model.summary())

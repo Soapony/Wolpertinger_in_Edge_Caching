@@ -15,6 +15,7 @@ class wolpertinger:
         self.predict_rewards=[]
         self.actual_rewards=[]
         self.tau = tau
+        self.model = model
 
         self.ddpg = ddpg(self.state_shape, self.cache_size, model, self.DEBUG, gamma, self.tau)
         self.knn = knn(self.cache_size, self.K,self.DEBUG)
@@ -28,6 +29,12 @@ class wolpertinger:
             print("state shape = ",self.state_shape)
     
     def offline_train(self, max_episodes):
+        """
+        if self.model == "paper":
+            self.ddpg.load_model_paper()
+        else:
+            self.ddpg.load_model()
+        """
         episodes, total_rewards, done = 0, 0.0, False
         #state is flatten and state shape is (3C,)
         current_state, done = self.env.reset()
@@ -121,7 +128,10 @@ class wolpertinger:
                 print(current_state)
                 print("total rewards = ",total_rewards)
 
-        #self.ddpg.save_model()
+        if self.model == "paper":
+            self.ddpg.save_model_paper()
+        else:
+            self.ddpg.save_model()
 
         return self.hit_rate
     
