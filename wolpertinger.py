@@ -140,6 +140,11 @@ class wolpertinger:
         self.predict_rewards.clear()
         self.actual_rewards.clear()
 
+        if self.model == "paper":
+            self.ddpg.load_model_paper()
+        else:
+            self.ddpg.load_model()
+
         total_rewards, done = 0.0, False
         #state is flatten and state shape is (3C,)
         current_state, done = self.env.reset()
@@ -165,6 +170,11 @@ class wolpertinger:
             current_state = next_state
             total_rewards += reward
 
+        if self.model == "paper":
+            self.ddpg.save_model_paper()
+        else:
+            self.ddpg.save_model()
+            
         cur_hit_rate = self.env.get_hit_rate()
         print("total rewards:"+str(total_rewards)+" hit rate:"+str(cur_hit_rate))
         
