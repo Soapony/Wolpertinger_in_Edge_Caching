@@ -9,6 +9,7 @@ import numpy as np
 import gc
 
 tf.keras.backend.set_floatx('float64')
+tf.debugging.set_log_device_placement(True)
 
 #this class implements ddpg functionality which create actor-critic netowrk and also target network and brain for replay
 class ddpg:

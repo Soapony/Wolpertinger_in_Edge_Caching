@@ -5,6 +5,7 @@ from tensorflow.keras.optimizers import Adam
 import numpy as np
 import gc
 from OU import OrnsteinUhlenbeckProcess
+tf.debugging.set_log_device_placement(True)
 
 tf.keras.backend.set_floatx('float64')
 
