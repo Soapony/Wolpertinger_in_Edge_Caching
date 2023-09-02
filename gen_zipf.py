@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import sys
 
 class gen_zipf():
     
@@ -23,7 +24,7 @@ class gen_zipf():
         # Pickup file id by pdf
         requests = random.choices(range(self.num_files), weights=pdf, k=self.size)
 
-        if self.DEBUG or True:
+        if self.DEBUG:
             print("============================DEBUG===================================")
             print("In gen_zipf -> generate_request")
             #plot distribtuion
@@ -50,7 +51,7 @@ class gen_zipf():
         pdf = np.random.permutation(pdf)
         requests1 = random.choices(range(self.num_files), weights=pdf, k=self.size)
 
-        if self.DEBUG or True:
+        if self.DEBUG:
             print("============================DEBUG===================================")
             print("In gen_zipf -> generate_varPopulation_request -> first population")
             #plot distribtuion
@@ -73,7 +74,7 @@ class gen_zipf():
         pdf = np.random.permutation(pdf)
         requests2 = random.choices(range(self.num_files), weights=pdf, k=self.size)
 
-        if self.DEBUG or True:
+        if self.DEBUG:
             print("============================DEBUG===================================")
             print("In gen_zipf -> generate_varPopulation_request -> second population")
             #plot distribtuion
@@ -94,36 +95,8 @@ class gen_zipf():
         requests = requests1 + requests2
         return requests
 
-    def generate_request_uniform(self,save_name = None):
-        requests = np.random.randint(5000,size = 10000)
-        #tmp_arr = np.arange(5000)
-        #requests = np.concatenate((tmp_arr,tmp_arr))
-        #np.random.shuffle(requests)
-
-        if self.DEBUG or True:
-            print("============================DEBUG===================================")
-            print("In gen_zipf -> generate_request_uniform")
-            count = np.bincount(requests)
-            k = np.arange(max(requests)+1)
-            plt.bar(k,count)
-            plt.show()
-            plt.close()
-        
-        if(save_name is not None):
-            f=open(save_name, "w")
-            for request in requests:
-                f.write(str(request)+" ")
-            f.write("\n")
-            f.close()
-        
-        return requests
-
-    def generate_var_normal_distrib(self, new_num_files = 500, round = 6, save_name = None):
-        sd = new_num_files
-
-        if save_name is not None:
-            f = open(save_name,"w")
-            f.close()
+    def generate_var_normal_distrib(self, new_num_files = 30, round = 5, save_name = None):
+        sd = 750
 
         requests=[]
 
@@ -146,13 +119,10 @@ class gen_zipf():
                 plt.show()
                 plt.close()
             
-            if(save_name is not None):
-                f=open(save_name, "a")
-                for request in normal_sample:
-                    f.write(str(request)+" ")
-                f.close()
-        if save_name is not None:
-            f=open(save_name,"a")
+        if(save_name is not None):
+            f=open(save_name, "w")
+            for request in requests:
+                f.write(str(request)+" ")
             f.write("\n")
             f.close()
 
@@ -175,3 +145,8 @@ class gen_zipf():
         return requests
 
 
+if __name__ == "__main__":
+    args = sys.argv
+    file_name = int(args[1])
+    zipf = gen_zipf(0.8,10000,5000,True)
+    zipf.generate_varPopulation_request(file_name)

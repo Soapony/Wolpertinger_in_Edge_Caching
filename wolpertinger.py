@@ -11,7 +11,6 @@ class wolpertinger:
         self.K = round((self.cache_size+1) * self.KNN_fraction)
         self.state_shape = self.env.get_state_shape()
         self.DEBUG = DEBUG
-        self.hit_rate=[]
         self.predict_rewards=[]
         self.actual_rewards=[]
         self.tau = tau
@@ -29,12 +28,6 @@ class wolpertinger:
             print("state shape = ",self.state_shape)
     
     def offline_train(self, max_episodes):
-        
-        if self.model == "paper":
-            self.ddpg.load_model_paper()
-        else:
-            self.ddpg.load_model()
-        
         episodes, total_rewards, done = 0, 0.0, False
         #state is flatten and state shape is (3C,)
         current_state, done = self.env.reset()
@@ -44,14 +37,7 @@ class wolpertinger:
             print("In wolpertinger -> offline_train -> after env.reset() -> current_state:")
             print(current_state)
             print("done = ",done)
-        """
-        f2 = open("result/pre_reward.txt","w")
-        f2.close()
-        f3 = open("result/act_reward.txt","w")
-        f3.close()
-        f = open("result/hit_history.txt","w")
-        f.close()
-        """
+
         while(episodes < max_episodes):
             if self.DEBUG:
                 print("============================DEBUG===================================")
@@ -59,23 +45,9 @@ class wolpertinger:
             if done:
                 episodes +=1
                 cur_hit_rate = self.env.get_hit_rate()
-                self.hit_rate.append(cur_hit_rate)
                 print("episode:"+str(episodes)+" total rewards:"+str(total_rewards)+" hit rate:"+str(cur_hit_rate))
-                """
-                f = open("result/hit_history.txt","a")
-                f.write(str(self.env.get_hit_history())+"\n")
-                f.close()
-                f2 = open("result/pre_reward.txt","a")
-                f2.write(str(self.predict_rewards)+"\n")
-                f2.close()
-                f3 = open("result/act_reward.txt","a")
-                f3.write(str(self.actual_rewards)+"\n")
-                f3.close()
-                """
+
                 self.env.hit_history.clear()
-                self.predict_rewards.clear()
-                self.actual_rewards.clear()
-                
                 total_rewards, done = 0.0, False
                 current_state, done = self.env.reset()
                 continue
@@ -96,18 +68,13 @@ class wolpertinger:
                 print("In wolpertinger -> offline_train -> knn_action_space:")
                 print(knn_action_space)
 
-            index, predict_reward = self.ddpg.critic.get_best_q_value_and_action_index(current_state, knn_action_space)
+            index, _ = self.ddpg.critic.get_best_q_value_and_action_index(current_state, knn_action_space)
             best_action = int(knn_action_space[index])
             if self.DEBUG:
                 print("============================DEBUG===================================")
                 print("In wolpertinger -> offline_train -> index & best_action:",index,best_action)
 
             next_state, reward, done = self.env.step(best_action)
-            #reward_error = predict_reward - reward
-
-            #self.predict_rewards.append(predict_reward)
-            #self.actual_rewards.append(reward)
-            #print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward, self.env.get_hit_rate())
 
             if self.DEBUG:
                 print("============================DEBUG===================================")
@@ -135,11 +102,7 @@ class wolpertinger:
 
         return self.hit_rate
     
-    def online_learning(self,env):
-        self.env = env
-        self.predict_rewards.clear()
-        self.actual_rewards.clear()
-
+    def online_learning(self):
         if self.model == "paper":
             self.ddpg.load_model_paper()
         else:
@@ -158,11 +121,11 @@ class wolpertinger:
             best_action = int(knn_action_space[index])
 
             next_state, reward, done = self.env.step(best_action)
-            reward_error = predict_reward - reward
 
+            #reward_error = predict_reward - reward
             self.predict_rewards.append(predict_reward)
             self.actual_rewards.append(reward)
-            print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward_error, self.env.get_hit_rate())
+            #print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward_error, self.env.get_hit_rate())
 
             self.ddpg.brain.remember(current_state, best_action, reward, next_state, done)
             self.ddpg.replay()
@@ -197,7 +160,6 @@ class wolpertinger:
         del self.K
         del self.state_shape
         del self.DEBUG
-        del self.hit_rate
         del self.predict_rewards
         del self.actual_rewards
         self.ddpg.clean()
