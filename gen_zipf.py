@@ -95,9 +95,7 @@ class gen_zipf():
         requests = requests1 + requests2
         return requests
 
-    def generate_var_normal_distrib(self, new_num_files = 30, round = 5, save_name = None):
-        sd = 750
-
+    def generate_var_normal_distrib(self, new_num_files = 30, sd = 500, round = 5, save_name = None):
         requests=[]
 
         for i in range(round):
@@ -147,6 +145,6 @@ class gen_zipf():
 
 if __name__ == "__main__":
     args = sys.argv
-    file_name = int(args[1])
+    file_name = args[1]
     zipf = gen_zipf(0.8,10000,5000,True)
-    zipf.generate_varPopulation_request(file_name)
+    zipf.generate_var_normal_distrib(100,1000,save_name=file_name)
