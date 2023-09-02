@@ -12,11 +12,11 @@ def offline(cache_size, model, dataset):
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "zipf1":
-        requests_list = zipf.load_request("training_data.txt")
+        requests_list = zipf.load_request("data/training_data.txt")
     elif dataset == "varPop":
-        requests_list = zipf.load_request("training_data_varPopulation.txt")
+        requests_list = zipf.load_request("data/training_data_varPopulation.txt")
     elif dataset == "varNor":
-        requests_list = zipf.load_request("training_data_varNormal.txt")
+        requests_list = zipf.load_request("data/training_data_varNormal.txt")
     else:
         print("error args")
         return
@@ -43,11 +43,11 @@ def online(cache_size,model,dataset):
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "varPop":
-        requests_list = zipf.load_request("training_data_varPopulation2.txt")
+        requests_list = zipf.load_request("data/training_data_varPopulation2.txt")
     elif dataset == "varNor":
-        requests_list = zipf.load_request("training_data_varNormal2.txt")
+        requests_list = zipf.load_request("data/training_data_varNormal2.txt")
     elif dataset == "zipf":
-        requests_list = zipf.load_request("training_data2.txt")
+        requests_list = zipf.load_request("data/training_data2.txt")
     else:
         return
     
