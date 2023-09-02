@@ -1,4 +1,5 @@
 import os
+import sys
 
 if __name__ == "__main__":
     """
@@ -10,8 +11,62 @@ if __name__ == "__main__":
     #tau=[0.001,0.01,0.1,0.15]
     #knn=[0.01,0.05,0.1,0.15,0.2,0.25,0.3]
     #gamma=[0.99,0.95,0.9,0.85,0.8,0.75,0.7]
-    dataset=["uniform","zipf2"]
-    for i in dataset:
-        #arg = str(i)
-        cmd = "python3 main.py 300 paper "+i
+    args = sys.argv
+    dataset = int(args[1])
+    if dataset == 1:
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper zipf train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper zipf online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_reward.png result/paper_C150_zipf_online.png"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new zipf train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new zipf online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_reward.png result/new_C150_zipf_online.png"
+        os.system(cmd)
+    if dataset == 2:
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varPop train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varPop online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_reward.png result/paper_C150_varPop_online.png"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varPop train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varPop online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_reward.png result/new_C150_varPop_online.png"
+        os.system(cmd)
+    if dataset == 3:
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varNor online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_reward.png result/paper_C150_varNor_online.png"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varNor online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_reward.png result/new_C150_varNor_online.png"
         os.system(cmd)
