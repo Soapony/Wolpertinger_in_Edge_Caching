@@ -11,7 +11,7 @@ def offline(cache_size, model, dataset):
     reward_fac = 0.9
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
-    if dataset == "zipf1":
+    if dataset == "zipf":
         requests_list = zipf.load_request("data/training_data.txt")
     elif dataset == "varPop":
         requests_list = zipf.load_request("data/training_data_varPopulation.txt")
