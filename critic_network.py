@@ -4,7 +4,6 @@ from tensorflow.keras.layers import Input, Dense, Concatenate
 from tensorflow.keras.optimizers import Adam
 import numpy as np
 import gc
-#tf.debugging.set_log_device_placement(True)
 
 tf.keras.backend.set_floatx('float64')
 
