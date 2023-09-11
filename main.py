@@ -57,7 +57,7 @@ def online(cache_size,model,dataset):
     
     env = cache_env(cache_size, requests_list, model, False, reward_fac)
     drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
-    hit_rate = drl_wol.online_learning(env)
+    hit_rate = drl_wol.online_learning()
     print("------------------------DEBUG--------------------------")
     print("hit rate: ", hit_rate)
 
