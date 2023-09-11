@@ -100,7 +100,7 @@ class wolpertinger:
         else:
             self.ddpg.save_model()
 
-        return self.hit_rate
+        return self.env.get_hit_rate()
     
     def online_learning(self):
         if self.model == "paper":
