@@ -95,14 +95,14 @@ class gen_zipf():
         requests = requests1 + requests2
         return requests
 
-    def generate_var_normal_distrib(self, new_num_files = 100, round = 5, save_name = None):
-        sd = 500
+    def generate_var_normal_distrib(self, new_num_files = 30, round = 5, save_name = None):
+        sd = 750
 
         requests=[]
 
         total_files = self.num_files
         mean = total_files - new_num_files / 2
-        normal_sample = np.round(np.random.normal(mean,sd,4000)).astype(int)
+        normal_sample = np.round(np.random.normal(mean,sd,2000)).astype(int)
         for j in range(len(normal_sample)):
             if normal_sample[j] > total_files:
                 normal_sample[j] = total_files - (normal_sample[j] - total_files)
@@ -112,7 +112,7 @@ class gen_zipf():
             total_files = self.num_files + (i+1) * new_num_files
             mean = total_files - new_num_files / 2
             
-            normal_sample = np.round(np.random.normal(mean,sd,2000)).astype(int)
+            normal_sample = np.round(np.random.normal(mean,sd,1000)).astype(int)
             for j in range(len(normal_sample)):
                 if normal_sample[j] > total_files:
                     normal_sample[j] = total_files - (normal_sample[j] - total_files)

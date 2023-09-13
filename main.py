@@ -5,7 +5,7 @@ import sys
 import gc
 
 def offline(cache_size, model, dataset):
-    max_episodes = 10
+    max_episodes = 15
     tau = 0.001
     knn = 0.2
     reward_fac = 0.9
@@ -17,8 +17,6 @@ def offline(cache_size, model, dataset):
         requests_list = zipf.load_request("data/training_data_varPopulation.txt")
     elif dataset == "varNor":
         requests_list = zipf.load_request("data/training_data_varNormal.txt")
-    elif dataset == "varNor2":
-        requests_list = zipf.load_request("data/training_data_varNormal3.txt")
     else:
         print("error args")
         return
@@ -48,8 +46,6 @@ def online(cache_size,model,dataset):
         requests_list = zipf.load_request("data/training_data_varPopulation2.txt")
     elif dataset == "varNor":
         requests_list = zipf.load_request("data/training_data_varNormal2.txt")
-    elif dataset == "varNor2":
-        requests_list = zipf.load_request("data/training_data_varNormal4.txt")
     elif dataset == "zipf":
         requests_list = zipf.load_request("data/training_data2.txt")
     else:
