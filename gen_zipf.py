@@ -96,7 +96,7 @@ class gen_zipf():
         return requests
 
     def generate_var_normal_distrib(self, new_num_files = 30, round = 5, save_name = None):
-        sd = 750
+        sd = 100
 
         requests=[]
 
