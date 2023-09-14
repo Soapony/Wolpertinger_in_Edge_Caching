@@ -3,7 +3,7 @@ from cache_env import cache_env
 from gen_zipf import gen_zipf
 import sys
 import gc
-import os
+import logging
 
 def offline(cache_size, model, dataset):
     max_episodes = 10
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
+    logging.getLogger("tensorflow").setLevel(logging.ERROR)
 
     if mode == "train":
         #run training
