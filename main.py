@@ -3,6 +3,7 @@ from cache_env import cache_env
 from gen_zipf import gen_zipf
 import sys
 import gc
+import os
 
 def offline(cache_size, model, dataset):
     max_episodes = 15
@@ -54,9 +55,14 @@ def online(cache_size,model,dataset):
     env = cache_env(cache_size, requests_list, model, False, reward_fac)
     drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
     hit_rate = drl_wol.online_learning()
-    print("------------------------DEBUG--------------------------")
-    print("hit rate: ", hit_rate)
-
+    if model == 'paper':
+        f=open("result/paper_zipf_hitrate.txt","a")
+        f.write(str(hit_rate)+" ")
+        f.close()
+    else:
+        f=open("result/new_zipf_hitrate.txt","a")
+        f.write(str(hit_rate)+" ")
+        f.close()
     return
 
 if __name__ == "__main__":
@@ -65,6 +71,7 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
     if mode == "train":
         #run training
