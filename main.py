@@ -12,7 +12,7 @@ def offline(cache_size, model, dataset):
     reward_fac = 0.9
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
-    if dataset == "zipf1":
+    if dataset == "zipf":
         requests_list = zipf.load_request("data/training_data.txt")
     elif dataset == "varPop":
         requests_list = zipf.load_request("data/training_data_varPopulation.txt")
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
     if mode == "train":
         #run training
