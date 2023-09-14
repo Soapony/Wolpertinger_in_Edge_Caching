@@ -123,8 +123,8 @@ class wolpertinger:
             next_state, reward, done = self.env.step(best_action)
 
             #reward_error = predict_reward - reward
-            self.predict_rewards.append(predict_reward)
-            self.actual_rewards.append(reward)
+            #self.predict_rewards.append(predict_reward)
+            #self.actual_rewards.append(reward)
             #print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward_error, self.env.get_hit_rate())
 
             self.ddpg.brain.remember(current_state, best_action, reward, next_state, done)

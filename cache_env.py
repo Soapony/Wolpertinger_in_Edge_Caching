@@ -64,7 +64,7 @@ class cache_env():
             self.feature_space = dict(tuples[:tmp_ind])
         self.update_feature_space()
         self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
-        self.hit_history.append(self.cache_hit_rate)
+        #self.hit_history.append(self.cache_hit_rate)
         if self.DEBUG:
             print("============================DEBUG===================================")
             print("In cache_env -> step -> new feature_space:")
