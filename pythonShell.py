@@ -35,21 +35,13 @@ if __name__ == "__main__":
     if dataset == 2:
         cmd = "rm offline_model/*"
         os.system(cmd)
-        cmd = "python3 main.py 150 paper varPop train"
+        cmd = "python3 main.py 150 new varNor train"
         os.system(cmd)
-        cmd = "python3 main.py 150 paper varPop online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py"
-        os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/paper_C150_varPop_online.png"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varPop train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varPop online"
+        cmd = "python3 main.py 150 new varNor online"
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/new_C150_varPop_online.png"
+        cmd = "mv result/hitrate_reward.png result/newTanh_C150_varNor_online.png"
         os.system(cmd)
     if dataset == 3:
         cmd = "rm offline_model/*"
