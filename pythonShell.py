@@ -69,9 +69,9 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "python3 main.py 150 paper 2varNor online"
         os.system(cmd)
-        cmd = "python3 main.py 150 new varNor train"
+        cmd = "python3 main.py 150 new 2varNor train"
         os.system(cmd)
-        cmd = "python3 main.py 150 new varNor online"
+        cmd = "python3 main.py 150 new 2varNor online"
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
