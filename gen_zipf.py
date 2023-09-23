@@ -135,6 +135,53 @@ class gen_zipf():
             f.close()
 
         return requests
+
+    def generate_2var_normal_distrib(self, save_name = None, new_num_files = 100):
+        sd = 1000
+        requests=[]
+        total_files = self.num_files
+        mean = total_files - new_num_files / 2
+        normal_sample = np.round(np.random.normal(mean,sd,3000)).astype(int)
+        for i in range(len(normal_sample)):
+            if normal_sample[i] > total_files:
+                normal_sample[i] = total_files - (normal_sample[i] - total_files)
+        requests = requests + normal_sample.tolist()
+
+        if self.DEBUG:
+                print("============================DEBUG===================================")
+                print("In gen_zipf -> generate_request_2var_normal_distrib")
+                count = np.bincount(normal_sample)
+                k = np.arange(max(normal_sample)+1)
+                plt.bar(k,count)
+                plt.show()
+                plt.close()
+
+        sd = 500
+        total_files = self.num_files + new_num_files
+        mean = total_files - new_num_files / 2
+        normal_sample = np.round(np.random.normal(mean,sd,7000)).astype(int)
+        for i in range(len(normal_sample)):
+            if normal_sample[i] > total_files:
+                normal_sample[i] = total_files - (normal_sample[i] - total_files)
+        requests = requests + normal_sample.tolist()
+
+        if self.DEBUG:
+                print("============================DEBUG===================================")
+                print("In gen_zipf -> generate_request_var_normal_distrib")
+                count = np.bincount(normal_sample)
+                k = np.arange(max(normal_sample)+1)
+                plt.bar(k,count)
+                plt.show()
+                plt.close()
+        
+        if(save_name is not None):
+            f=open(save_name, "w")
+            for request in requests:
+                f.write(str(request)+" ")
+            f.write("\n")
+            f.close()
+        
+        return requests
     
     def load_request(self,file_name):
         f = open(file_name,"r")
@@ -158,4 +205,4 @@ if __name__ == "__main__":
     file_name = args[1]
     zipf = gen_zipf(0.8,10000,5000,True)
     #zipf.generate_varPopulation_request(file_name)
-    zipf.generate_var_normal_distrib(save_name = file_name)
+    zipf.generate_2var_normal_distrib(save_name = file_name)

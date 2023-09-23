@@ -63,18 +63,15 @@ if __name__ == "__main__":
         cmd = "mv result/hitrate_reward.png result/new_C150_varNor_online.png"
         os.system(cmd)
     if dataset == 4:
-        f=open("result/paper_zipf_hitrate.txt","w")
-        f.close()
-        f=open("result/new_zipf_hitrate.txt","w")
-        f.close()
-        for i in range(50):
-            cmd = "rm offline_model/*"
-            os.system(cmd)
-            cmd = "python3 main.py 150 paper zipf train"
-            os.system(cmd)
-            cmd = "python3 main.py 150 paper zipf online"
-            os.system(cmd)
-            cmd = "python3 main.py 150 new zipf train"
-            os.system(cmd)
-            cmd = "python3 main.py 150 new zipf online"
-            os.system(cmd)
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper 2varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper 2varNor online"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varNor online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)

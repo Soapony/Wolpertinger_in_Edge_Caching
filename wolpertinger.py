@@ -140,10 +140,14 @@ class wolpertinger:
             
         cur_hit_rate = self.env.get_hit_rate()
         print("total rewards:"+str(total_rewards)+" hit rate:"+str(cur_hit_rate))
-        
-        f = open("result/hit_history.txt","w")
-        f.write(str(self.env.get_hit_history())+"\n")
-        f.close()
+        if self.model == "paper":
+            f = open("result/paper_hit_history.txt","w")
+            f.write(str(self.env.get_hit_history())+"\n")
+            f.close()
+        else:
+            f = open("result/new_hit_history.txt","w")
+            f.write(str(self.env.get_hit_history())+"\n")
+            f.close()
         f2 = open("result/pre_reward.txt","w")
         f2.write(str(self.predict_rewards)+"\n")
         f2.close()

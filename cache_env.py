@@ -2,7 +2,7 @@ import numpy as np
 import gc
 
 class cache_env():
-    def __init__(self, cache_size, requests_list, model="new", DEBUG=False, reward_dis_fac=0.9):
+    def __init__(self, cache_size, requests_list, model="new", DEBUG=False, reward_dis_fac=0.9, online=False):
         #short- medium- long-term
         self.terms=np.array([10,100,1000])
         #self.terms=np.array([10,50,100,250,500,750,1000])
@@ -13,7 +13,7 @@ class cache_env():
         self.reward_discount_factor = reward_dis_fac
         self.DEBUG = DEBUG
         self.model = model
-
+        self.online = online
         #feature space dict structure:
         #{unique content id: [short f, medium f, long f],
         # unique content id: [short f, medium f, long f],
@@ -64,7 +64,8 @@ class cache_env():
             self.feature_space = dict(tuples[:tmp_ind])
         self.update_feature_space()
         self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
-        #self.hit_history.append(self.cache_hit_rate)
+        if self.online:
+            self.hit_history.append(self.cache_hit_rate)
         if self.DEBUG:
             print("============================DEBUG===================================")
             print("In cache_env -> step -> new feature_space:")
@@ -92,7 +93,7 @@ class cache_env():
         if self.model == "paper":
             reward = tmp_reward
         else:
-            #reward = (tmp_reward - self.previous_reward) / 10 * tmp_reward
+            #reward = (tmp_reward - self.previous_reward) * 10
             #reward = np.tanh((tmp_reward - self.previous_reward)) * tmp_reward
             reward = tmp_reward - self.previous_reward
             self.previous_reward = tmp_reward
@@ -169,6 +170,8 @@ class cache_env():
             return False
         
         self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
+        if self.online:
+            self.hit_history.append(self.cache_hit_rate)
         self.update_feature_space()
         self.cur_req_ind += 1
         if self.DEBUG:

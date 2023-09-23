@@ -17,6 +17,8 @@ def offline(cache_size, model, dataset):
         requests_list = zipf.load_request("data/training_data_varPopulation.txt")
     elif dataset == "varNor":
         requests_list = zipf.load_request("data/training_data_varNormal.txt")
+    elif dataset == "2varNor":
+        requests_list = zipf.load_request("data/training_data_2varNormal.txt")
     else:
         print("error args")
         return
@@ -48,20 +50,17 @@ def online(cache_size,model,dataset):
         requests_list = zipf.load_request("data/training_data_varNormal2.txt")
     elif dataset == "zipf":
         requests_list = zipf.load_request("data/training_data2.txt")
+    elif dataset == "2varNor":
+        requests_list = zipf.load_request("data/training_data_2varNormal2.txt")
     else:
         return
     
-    env = cache_env(cache_size, requests_list, model, False, reward_fac)
+    env = cache_env(cache_size, requests_list, model, False, reward_fac,True)
     drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
     hit_rate = drl_wol.online_learning()
-    if model == 'paper':
-        f=open("result/paper_zipf_hitrate.txt","a")
-        f.write(str(hit_rate)+" ")
-        f.close()
-    else:
-        f=open("result/new_zipf_hitrate.txt","a")
-        f.write(str(hit_rate)+" ")
-        f.close()
+    f=open("result.txt","a")
+    f.write(str(hit_rate)+" ")
+    f.close()
     return
 
 if __name__ == "__main__":
