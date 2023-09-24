@@ -136,8 +136,8 @@ class gen_zipf():
 
         return requests
 
-    def generate_2var_normal_distrib(self, save_name = None, new_num_files = 100):
-        sd = 1000
+    def generate_2var_normal_distrib(self, save_name = None, new_num_files = 50):
+        sd = 500
         requests=[]
         total_files = self.num_files
         mean = total_files - new_num_files / 2
@@ -156,7 +156,7 @@ class gen_zipf():
                 plt.show()
                 plt.close()
 
-        sd = 500
+        sd = 200
         total_files = self.num_files + new_num_files
         mean = total_files - new_num_files / 2
         normal_sample = np.round(np.random.normal(mean,sd,7000)).astype(int)
