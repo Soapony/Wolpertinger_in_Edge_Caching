@@ -50,17 +50,13 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "python3 main.py 150 paper varNor online"
         os.system(cmd)
-        cmd = "python3 plotGraph.py"
-        os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/paper_C150_varNor_online.png"
-        os.system(cmd)
         cmd = "python3 main.py 150 new varNor train"
         os.system(cmd)
         cmd = "python3 main.py 150 new varNor online"
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/new_C150_varNor_online.png"
+        cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
         os.system(cmd)
     if dataset == 4:
         cmd = "rm offline_model/*"
