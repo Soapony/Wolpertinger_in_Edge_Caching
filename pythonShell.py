@@ -33,31 +33,36 @@ if __name__ == "__main__":
         cmd = "mv result/hitrate_reward.png result/new_C150_zipf_online.png"
         os.system(cmd)
     if dataset == 2:
-        cmd = "rm offline_model/*"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py"
-        os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/newTanh_C150_varNor_online.png"
-        os.system(cmd)
+        os.system("rm *.txt")
+        os.system("touch new_hitrate.txt paper_hitrate.txt")
+        for i in range(10):
+            os.system("rm offline_model/*")
+            cmd = "python3 main.py 150 new varPop train"
+            os.system(cmd)
+            cmd = "python3 main.py 150 new varPop online"
+            os.system(cmd)
+            cmd = "python3 main.py 150 paper varPop train"
+            os.system(cmd)
+            cmd = "python3 main.py 150 paper varPop online"
+            os.system(cmd)
     if dataset == 3:
-        cmd = "rm offline_model/*"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper varNor train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper varNor online"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py"
-        os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
-        os.system(cmd)
+        os.system("rm *.txt")
+        os.system("touch new_hitrate.txt paper_hitrate.txt")
+        for i in range(10):
+            cmd = "rm offline_model/*"
+            os.system(cmd)
+            cmd = "python3 main.py 150 paper varNor train"
+            os.system(cmd)
+            cmd = "python3 main.py 150 paper varNor online"
+            os.system(cmd)
+            cmd = "python3 main.py 150 new varNor train"
+            os.system(cmd)
+            cmd = "python3 main.py 150 new varNor online"
+            os.system(cmd)
+        #cmd = "python3 plotGraph.py"
+        #os.system(cmd)
+        #cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
+        #os.system(cmd)
     if dataset == 4:
         cmd = "rm offline_model/*"
         os.system(cmd)

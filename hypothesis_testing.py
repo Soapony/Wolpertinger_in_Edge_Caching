@@ -16,20 +16,19 @@ if __name__ == "__main__":
     new_hitrate = np.array([float(x) for x in new_hitrate])
     f.close()
 
+    alpha = 0.05
+    t_statistic, p_value = stats.ttest_ind(paper_hitrate,new_hitrate,alternative='less')
+    print("T-statstic:", t_statistic)
+    print("P-value:",p_value)
+    if alpha > p_value:
+        print("reject the null hypothesis that paper's sample mean is greater or equal to proposed's sample mean, alpha is bigger than p_value in 95% confidence level")
+
     difference = new_hitrate - paper_hitrate
     print(difference)
-    null_hypothesis_mean = 0.
-    t_statistic, p_value = stats.ttest_1samp(difference, null_hypothesis_mean)
-    degrees_of_freedom = len(difference) - 1
-    confidence_level = 0.95
-    alpha = 1 - confidence_level
-    critical_t_value = stats.t.ppf(confidence_level, df=degrees_of_freedom)
-
-    if t_statistic > critical_t_value:
-        print("Reject the null hypothesis. Mean is greater than 0.")
-    else:
-        print("Fail to reject the null hypothesis. Mean is less than or equal to 0.")
+    null_hypothesis_mean = 0
+    t_statistic, p_value = stats.ttest_1samp(a=difference, popmean=null_hypothesis_mean)
     
     print("T-statistic:", t_statistic)
     print("P-value:",p_value)
-    print("Critical t-value:", critical_t_value)
+    if alpha > p_value:
+        print("reject the null hypothesis that the mean of proposed sample minus paper sample is 0, alpha is bigger than p_value in 95% confidence level")

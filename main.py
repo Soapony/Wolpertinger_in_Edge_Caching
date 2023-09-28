@@ -58,9 +58,14 @@ def online(cache_size,model,dataset):
     env = cache_env(cache_size, requests_list, model, False, reward_fac,True)
     drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
     hit_rate = drl_wol.online_learning()
-    f=open("result.txt","a")
-    f.write(str(hit_rate)+" ")
-    f.close()
+    if model == "paper":
+        f=open("paper_hitrate.txt","a")
+        f.write(str(hit_rate)+" ")
+        f.close()
+    else:
+        f=open("new_hitrate.txt","a")
+        f.write(str(hit_rate)+" ")
+        f.close()
     return
 
 if __name__ == "__main__":
