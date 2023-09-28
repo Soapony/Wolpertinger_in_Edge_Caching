@@ -163,15 +163,15 @@ class cache_env():
             for i in range(len(self.terms)):
                 self.feature_space[id][i] += 1
             self.hit_count += 1
+            self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
+            if self.online:
+                self.hit_history.append(self.cache_hit_rate)
         elif(len(self.feature_space) < self.cache_size):
             #add to cache and update feature space
             self.feature_space[id] = [1] * len(self.terms)
         else:
             return False
         
-        self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
-        if self.online:
-            self.hit_history.append(self.cache_hit_rate)
         self.update_feature_space()
         self.cur_req_ind += 1
         if self.DEBUG:

@@ -71,3 +71,5 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
+        cmd = "mv result/hitrate_compare.png result/hitrate_respond_speed.png"
+        os.system(cmd)
