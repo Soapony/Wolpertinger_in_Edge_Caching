@@ -74,7 +74,7 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    para = args[5]
+    para = float(args[5])
 
     if mode == "train":
         #run training
