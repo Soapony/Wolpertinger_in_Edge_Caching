@@ -4,11 +4,11 @@ from gen_zipf import gen_zipf
 import sys
 import gc
 
-def offline(cache_size, model, dataset):
+def offline(cache_size, model, dataset,para):
     max_episodes = 10
     tau = 0.001
     knn = 0.2
-    reward_fac = 0.9
+    reward_fac = para
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "zipf":
@@ -38,10 +38,10 @@ def offline(cache_size, model, dataset):
 
     return
 
-def online(cache_size,model,dataset):
+def online(cache_size,model,dataset,para):
     tau = 0.001
     knn = 0.2
-    reward_fac = 0.9
+    reward_fac = para
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "varPop":
@@ -74,11 +74,12 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
+    para = args[5]
 
     if mode == "train":
         #run training
-        offline(cache_size,model,dataset)
+        offline(cache_size,model,dataset,para)
     elif mode == "online":
-        online(cache_size,model,dataset)
+        online(cache_size,model,dataset,para)
     else:
         print("error args")

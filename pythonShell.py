@@ -35,15 +35,13 @@ if __name__ == "__main__":
     if dataset == 2:
         os.system("rm *.txt")
         os.system("touch new_hitrate.txt paper_hitrate.txt")
-        for i in range(10):
+        reward_factor=[0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1]
+        for i in reward_factor:
             os.system("rm offline_model/*")
-            cmd = "python3 main.py 150 new varPop train"
+            para = str(i)
+            cmd = "python3 main.py 150 new zipf train "+para
             os.system(cmd)
-            cmd = "python3 main.py 150 new varPop online"
-            os.system(cmd)
-            cmd = "python3 main.py 150 paper varPop train"
-            os.system(cmd)
-            cmd = "python3 main.py 150 paper varPop online"
+            cmd = "python3 main.py 150 new zipf online "+para
             os.system(cmd)
     if dataset == 3:
         os.system("rm *.txt")

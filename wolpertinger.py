@@ -117,15 +117,10 @@ class wolpertinger:
 
             knn_action_space = self.knn.expand_by_KNN(proto_actor)
 
-            index, predict_reward = self.ddpg.critic.get_best_q_value_and_action_index(current_state, knn_action_space)
+            index, _ = self.ddpg.critic.get_best_q_value_and_action_index(current_state, knn_action_space)
             best_action = int(knn_action_space[index])
 
             next_state, reward, done = self.env.step(best_action)
-
-            #reward_error = predict_reward - reward
-            #self.predict_rewards.append(predict_reward)
-            #self.actual_rewards.append(reward)
-            #print("DEBUG ACUTION REWARD-ERROR HIT-RATE:",best_action, reward_error, self.env.get_hit_rate())
 
             self.ddpg.brain.remember(current_state, best_action, reward, next_state, done)
             self.ddpg.replay()
@@ -148,12 +143,6 @@ class wolpertinger:
             f = open("result/new_hit_history.txt","w")
             f.write(str(self.env.get_hit_history())+"\n")
             f.close()
-        f2 = open("result/pre_reward.txt","w")
-        f2.write(str(self.predict_rewards)+"\n")
-        f2.close()
-        f3 = open("result/act_reward.txt","w")
-        f3.write(str(self.actual_rewards)+"\n")
-        f3.close()
 
         return cur_hit_rate
 
