@@ -7,8 +7,8 @@ import gc
 def offline(cache_size, model, dataset,para):
     max_episodes = 10
     tau = 0.001
-    knn = 0.2
-    reward_fac = para
+    knn = para
+    reward_fac = 0.9
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "zipf":
@@ -40,8 +40,8 @@ def offline(cache_size, model, dataset,para):
 
 def online(cache_size,model,dataset,para):
     tau = 0.001
-    knn = 0.2
-    reward_fac = para
+    knn = para
+    reward_fac = 0.9
     gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "varPop":
