@@ -9,7 +9,7 @@ def offline(cache_size, model, dataset,para):
     tau = 0.001
     knn = 0.1
     reward_fac = 0.9
-    gamma = para
+    gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "zipf":
         requests_list = zipf.load_request("data/training_data.txt")
@@ -42,7 +42,7 @@ def online(cache_size,model,dataset,para):
     tau = 0.001
     knn = 0.1
     reward_fac = 0.9
-    gamma = para
+    gamma = 0.9
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "varPop":
         requests_list = zipf.load_request("data/training_data_varPopulation2.txt")
@@ -74,7 +74,8 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    para = float(args[5])
+    #para = float(args[5])
+    para = None
 
     if mode == "train":
         #run training

@@ -20,17 +20,41 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "python3 main.py 150 paper zipf online"
         os.system(cmd)
-        cmd = "python3 plotGraph.py"
-        os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/paper_C150_zipf_online.png"
-        os.system(cmd)
         cmd = "python3 main.py 150 new zipf train"
         os.system(cmd)
         cmd = "python3 main.py 150 new zipf online"
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
-        cmd = "mv result/hitrate_reward.png result/new_C150_zipf_online.png"
+        cmd = "mv result/hitrate_compare.png result/C150_zipf_online.png"
+        os.system(cmd)
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varPop train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varPop online"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varPop train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varPop online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_compare.png result/C150_varPop_online.png"
+        os.system(cmd)
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper varNor online"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new varNor online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
         os.system(cmd)
     if dataset == 2:
         os.system("rm *.txt")

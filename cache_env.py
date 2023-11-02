@@ -24,7 +24,6 @@ class cache_env():
         self.cache_hit_rate = 0.
         self.hit_history = []
         self.hit_count = 0
-        self.hit_base = 0
         self.last_req_ind = len(self.all_requests)-1
         self.previous_reward = 0.
 
@@ -40,7 +39,6 @@ class cache_env():
         self.feature_space = {}
         self.cur_req_ind = 0
         self.hit_count = 0
-        self.hit_base = 0
         self.cache_hit_rate = 0.0
         next_state, done = self.get_next_state()
         if self.DEBUG:
@@ -65,8 +63,7 @@ class cache_env():
             #then cut the last tuple which is the removing one and transform into a new dict
             self.feature_space = dict(tuples[:tmp_ind])
         self.update_feature_space()
-        self.hit_base += 1
-        self.cache_hit_rate = self.hit_count / self.hit_base
+        self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
         if self.online:
             self.hit_history.append(self.cache_hit_rate)
         if self.DEBUG:
@@ -166,16 +163,16 @@ class cache_env():
             for i in range(len(self.terms)):
                 self.feature_space[id][i] += 1
             self.hit_count += 1
-            self.hit_base += 1
-            self.cache_hit_rate = self.hit_count / self.hit_base
-            if self.online:
-                self.hit_history.append(self.cache_hit_rate)
         elif(len(self.feature_space) < self.cache_size):
             #add to cache and update feature space
             self.feature_space[id] = [1] * len(self.terms)
         else:
             return False
         
+        self.cache_hit_rate = self.hit_count / (self.cur_req_ind+1)
+        if self.online:
+            self.hit_history.append(self.cache_hit_rate)
+            
         self.update_feature_space()
         self.cur_req_ind += 1
         if self.DEBUG:
@@ -219,7 +216,6 @@ class cache_env():
         del self.DEBUG
         del self.cur_req_ind
         del self.hit_count
-        del self.hit_base
         del self.last_req_ind
         del self.feature_space
         gc.collect()

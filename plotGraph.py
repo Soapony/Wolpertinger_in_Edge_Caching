@@ -143,6 +143,8 @@ if __name__ == "__main__":
         tmp = tmp.split(", ")
         tmp = [float(x) for x in tmp]
         history2 = history2 + tmp
+    history = history[1000:]
+    history2 = history2[1000:]
     x = np.arange(len(history))
     plt.plot(x,history,label="paper_hit_history")
     plt.plot(x,history2,label="proposed_hit_history")
