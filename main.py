@@ -6,10 +6,10 @@ import gc
 
 def offline(cache_size, model, dataset,para):
     max_episodes = 10
-    tau = 0.001
+    tau = para
     knn = 0.1
     reward_fac = 0.9
-    gamma = 0.9
+    gamma = 0.99
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "zipf":
         requests_list = zipf.load_request("data/training_data.txt")
@@ -39,7 +39,7 @@ def offline(cache_size, model, dataset,para):
     return
 
 def online(cache_size,model,dataset,para):
-    tau = 0.001
+    tau = para
     knn = 0.1
     reward_fac = 0.9
     gamma = 0.9
@@ -74,8 +74,8 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    #para = float(args[5])
-    para = None
+    para = float(args[5])
+    #para = None
 
     if mode == "train":
         #run training
