@@ -6,7 +6,7 @@ import gc
 
 def offline(cache_size, model, dataset,para):
     max_episodes = 10
-    tau = para
+    tau = 0.1
     knn = 0.1
     reward_fac = 0.9
     gamma = 0.99
@@ -39,7 +39,7 @@ def offline(cache_size, model, dataset,para):
     return
 
 def online(cache_size,model,dataset,para):
-    tau = para
+    tau = 0.1
     knn = 0.1
     reward_fac = 0.9
     gamma = 0.9
@@ -74,8 +74,8 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    para = float(args[5])
-    #para = None
+    #para = float(args[5])
+    para = None
 
     if mode == "train":
         #run training

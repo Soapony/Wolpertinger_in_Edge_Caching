@@ -136,16 +136,15 @@ class gen_zipf():
 
         return requests
 
-    def generate_2var_normal_distrib(self, save_name = None, new_num_files = 50):
-        sd = 1000
-        requests=[]
+    def generate_2var_normal_distrib(self, save_name = None, new_num_files = 100):
+        sd = 500
         total_files = self.num_files
         mean = total_files - new_num_files / 2
-        normal_sample = np.round(np.random.normal(mean,sd,3000)).astype(int)
+        normal_sample = np.round(np.random.normal(mean,sd,5000)).astype(int)
         for i in range(len(normal_sample)):
             if normal_sample[i] > total_files:
                 normal_sample[i] = total_files - (normal_sample[i] - total_files)
-        requests = requests + normal_sample.tolist()
+        requests = [] + normal_sample.tolist()
 
         if self.DEBUG:
                 print("============================DEBUG===================================")
@@ -155,11 +154,24 @@ class gen_zipf():
                 plt.bar(k,count)
                 plt.show()
                 plt.close()
+        
+        if(save_name is not None):
+            f=open(save_name+".txt", "w")
+            for request in requests:
+                f.write(str(request)+" ")
+            f.write("\n")
+            f.close()
+        
+        normal_sample = np.round(np.random.normal(mean,sd,5000)).astype(int)
+        for i in range(len(normal_sample)):
+            if normal_sample[i] > total_files:
+                normal_sample[i] = total_files - (normal_sample[i] - total_files)
+        requests = [] + normal_sample.tolist()
 
-        sd = 500
+        sd = 250
         total_files = self.num_files + new_num_files
         mean = total_files - new_num_files / 2
-        normal_sample = np.round(np.random.normal(mean,sd,7000)).astype(int)
+        normal_sample = np.round(np.random.normal(mean,sd,5000)).astype(int)
         for i in range(len(normal_sample)):
             if normal_sample[i] > total_files:
                 normal_sample[i] = total_files - (normal_sample[i] - total_files)
@@ -175,7 +187,7 @@ class gen_zipf():
                 plt.close()
         
         if(save_name is not None):
-            f=open(save_name, "w")
+            f=open(save_name+"2.txt", "w")
             for request in requests:
                 f.write(str(request)+" ")
             f.write("\n")
