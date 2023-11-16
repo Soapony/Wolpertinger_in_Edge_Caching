@@ -117,12 +117,12 @@ class ddpg:
 
         with tf.GradientTape() as tape:
             q_values = self.critic.model([states, actions])
-            TD_error = target_q_values - q_values
+            #TD_error = target_q_values - q_values
             #critic_loss = tf.math.reduce_mean(tf.math.square(TD_error))
             #critic_loss = tf.math.reduce_mean(tf.math.abs(TD_error))
-            #critic_loss = tf.keras.losses.MSE(target_q_values, q_values)
-            h = tf.keras.losses.Huber()
-            critic_loss = h(target_q_values, q_values)
+            critic_loss = tf.keras.losses.MSE(target_q_values, q_values)
+            #h = tf.keras.losses.Huber()
+            #critic_loss = h(target_q_values, q_values)
             if self.DEBUG:
                 print("============================DEBUG===================================")
                 print("In ddpg -> replay -> critic network loss calculation")

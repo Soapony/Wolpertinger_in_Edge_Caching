@@ -94,3 +94,22 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "mv result/hitrate_compare.png result/hitrate_respond_speed.png"
         os.system(cmd)
+    if dataset == 5:
+        cmd = "rm offline_model/*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper zipf train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new zipf train"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_compare.png result/C150_zipf_train.png"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper zipf online"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new zipf online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_compare.png result/C150_zipf_train.png"
+        os.system(cmd)

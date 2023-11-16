@@ -42,7 +42,7 @@ def online(cache_size,model,dataset,para):
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9
-    gamma = 0.9
+    gamma = 0.99
     zipf = gen_zipf(1.3, 10000, 5000)
     if dataset == "varPop":
         requests_list = zipf.load_request("data/training_data_varPopulation2.txt")
