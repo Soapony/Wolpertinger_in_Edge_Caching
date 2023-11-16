@@ -103,7 +103,7 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_zipf_train.png"
+        cmd = "mv result/hitrate_compare.png result/C150_zipf_train_MSE.png"
         os.system(cmd)
         cmd = "python3 main.py 150 paper zipf online"
         os.system(cmd)
@@ -111,5 +111,5 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_zipf_train.png"
+        cmd = "mv result/hitrate_compare.png result/C150_zipf_train_MSE.png"
         os.system(cmd)
