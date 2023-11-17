@@ -51,7 +51,7 @@ class wolpertinger:
                 self.env.hit_history.clear()
                 total_rewards, done = 0.0, False
                 #this block is to be deleted
-                if episodes == 9:
+                if episodes == max_episodes-1:
                     self.env.setOnline()
                 current_state, done = self.env.reset()
                 continue
