@@ -40,10 +40,6 @@ class wolpertinger:
 
         while(episodes < max_episodes):
 
-            #this block is to be deleted
-            if episodes == 9:
-                self.env.setOnline()
-
             if self.DEBUG:
                 print("============================DEBUG===================================")
                 print("In wolpertinger -> offline_train -> episodes:",episodes)
@@ -54,6 +50,9 @@ class wolpertinger:
 
                 self.env.hit_history.clear()
                 total_rewards, done = 0.0, False
+                #this block is to be deleted
+                if episodes == 9:
+                    self.env.setOnline()
                 current_state, done = self.env.reset()
                 continue
             
