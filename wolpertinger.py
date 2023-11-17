@@ -101,6 +101,7 @@ class wolpertinger:
         
         #this block is to be deleted
         if self.model == "paper":
+            print("write hit history for train")
             f = open("result/paper_hit_history.txt","w")
             f.write(str(self.env.get_hit_history())+"\n")
             f.close()
