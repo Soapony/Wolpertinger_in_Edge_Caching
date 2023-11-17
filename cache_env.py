@@ -35,9 +35,6 @@ class cache_env():
             print("state shape = ",self.state_shape)
             print("rewards discount factor = ",self.reward_discount_factor)
     
-    def setOnline(self):
-        self.online = True
-    
     def reset(self):
         self.feature_space = {}
         self.cur_req_ind = 0
@@ -96,8 +93,6 @@ class cache_env():
         if self.model == "paper":
             reward = tmp_reward
         else:
-            #reward = (tmp_reward - self.previous_reward) * 10
-            #reward = np.tanh((tmp_reward - self.previous_reward)) * tmp_reward
             reward = tmp_reward - self.previous_reward
             self.previous_reward = tmp_reward
 

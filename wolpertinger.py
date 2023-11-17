@@ -50,9 +50,6 @@ class wolpertinger:
 
                 self.env.hit_history.clear()
                 total_rewards, done = 0.0, False
-                #this block is to be deleted
-                if episodes == max_episodes-1:
-                    self.env.setOnline()
                 current_state, done = self.env.reset()
                 continue
             
@@ -98,17 +95,6 @@ class wolpertinger:
                 print("new state:")
                 print(current_state)
                 print("total rewards = ",total_rewards)
-        
-        #this block is to be deleted
-        if self.model == "paper":
-            print("write hit history for train")
-            f = open("result/paper_hit_history.txt","w")
-            f.write(str(self.env.get_hit_history())+"\n")
-            f.close()
-        else:
-            f = open("result/new_hit_history.txt","w")
-            f.write(str(self.env.get_hit_history())+"\n")
-            f.close()
 
         if self.model == "paper":
             self.ddpg.save_model_paper()
