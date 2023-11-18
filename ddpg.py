@@ -23,6 +23,7 @@ class ddpg:
         self.cache_size = cache_size
         self.DEBUG = DEBUG
         self.tau = tau
+        self.model = model
 
         self.update_target_para(self.actor.model, self.actor_t.model, tau=1.)
         self.update_target_para(self.critic.model, self.critic_t.model, tau=1.)
@@ -93,19 +94,17 @@ class ddpg:
 
         with tf.GradientTape() as tape:
             q_values = self.critic.model([states, actions])
-            #TD_error = target_q_values - q_values
-            #critic_loss = tf.math.reduce_mean(tf.math.square(TD_error))
-            #critic_loss = tf.math.reduce_mean(tf.math.abs(TD_error))
-            critic_loss = tf.keras.losses.MSE(target_q_values, q_values)
-            #h = tf.keras.losses.Huber()
-            #critic_loss = h(target_q_values, q_values)
+            critic_loss = None
+            if self.model == "paper":
+                critic_loss = tf.keras.losses.MSE(target_q_values, q_values)
+            else:
+                h = tf.keras.losses.Huber()
+                critic_loss = h(target_q_values, q_values)
             if self.DEBUG:
                 print("============================DEBUG===================================")
                 print("In ddpg -> replay -> critic network loss calculation")
                 print("q_values:")
                 print(q_values)
-                print("TD_error:")
-                #print(TD_error)
                 print("critic_loss:")
                 print(critic_loss)
         critic_gradient = tape.gradient(critic_loss, self.critic.model.trainable_variables)
