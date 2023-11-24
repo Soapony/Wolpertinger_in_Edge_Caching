@@ -75,7 +75,7 @@ class critic_network:
         L1_concat = Dense(self.l_units32, name="critic_concat_L1", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(concat)
         L2_concat = Dense(self.l_units32, name="critic_concat_L2", activation='relu', kernel_initializer=tf.keras.initializers.HeNormal())(L1_concat)
 
-        output = Dense(1, name="critic_out", activation='linear')(L1_concat)
+        output = Dense(1, name="critic_out", activation='linear')(L2_concat)
         model = Model(inputs=[input_state, input_action], outputs=output)
 
         return model

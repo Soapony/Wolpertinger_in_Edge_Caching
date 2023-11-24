@@ -45,6 +45,7 @@ class gen_zipf():
         return requests
 
     def generate_varPopulation_request(self, save_name=None):
+        """
         #generate first population
         denominator_sum = sum(1.0 / (i ** self.param) for i in range(1,self.num_files+1))
         pdf = [(1.0 / (i ** self.param)) / denominator_sum for i in range(1,self.num_files+1)]
@@ -83,44 +84,59 @@ class gen_zipf():
             plt.bar(k,count)
             plt.show()
             plt.close()
+        """
+        sd = 1000
+        mean1 = 1500
+        mean2 = 3500
+        requests1 = []
+        requests2 = []
+        normal_sample1 = np.round(np.random.normal(mean1,sd,5000)).astype(int)
+        for i in range(len(normal_sample1)):
+            if normal_sample1[i] > self.num_files:
+                normal_sample1[i] = self.num_files - (normal_sample1[i] - self.num_files)
+            elif normal_sample1[i] < 0:
+                normal_sample1[i] = abs(normal_sample1[i])
+        requests1 = requests1 + normal_sample1.tolist()
+
+        normal_sample2 = np.round(np.random.normal(mean2,sd,5000)).astype(int)
+        for i in range(len(normal_sample2)):
+            if normal_sample2[i] > self.num_files:
+                normal_sample2[i] = self.num_files - (normal_sample2[i] - self.num_files)
+            elif normal_sample2[i] < 0:
+                normal_sample2[i] = abs(normal_sample2[i])
+        requests2 = requests2 + normal_sample2.tolist()
+
+        requests = requests1 + requests2
+
+        if self.DEBUG:
+            print("============================DEBUG===================================")
+            print("In gen_zipf -> generate_varPopulation_request -> second population")
+            #plot distribtuion
+            count = np.bincount(requests)
+            k = np.arange(max(requests)+1)
+            plt.bar(k,count)
+            plt.show()
+            plt.close()
 
         #save the requests in txt file
         if(save_name is not None):
-            f=open(save_name, "a")
-            for request in requests2:
+            f=open(save_name, "w")
+            for request in requests:
                 f.write(str(request)+" ")
             f.write("\n")
             f.close()
 
-        requests = requests1 + requests2
         return requests
 
-    def generate_var_normal_distrib(self, new_num_files = 50, round = 5, save_name = None):
-        sd = 300
+    def generate_var_normal_distrib(self, new_num_files = 50, round = 3, save_name = None):
+        sd = 150
         requests=[]
-        """
-        total_files = self.num_files
-        mean = total_files - new_num_files / 2
-        normal_sample = np.round(np.random.normal(mean,sd,1500)).astype(int)
-        for j in range(len(normal_sample)):
-            if normal_sample[j] > total_files:
-                normal_sample[j] = total_files - (normal_sample[j] - total_files)
-        requests = requests + normal_sample.tolist()
 
-        if self.DEBUG:
-            print("============================DEBUG===================================")
-            print("In gen_zipf -> generate_request_var_normal_distrib")
-            count = np.bincount(normal_sample)
-            k = np.arange(max(normal_sample)+1)
-            plt.bar(k,count)
-            plt.show()
-            plt.close()
-        """
         for i in range(round):
-            total_files = self.num_files + (i+1) * new_num_files
+            total_files = self.num_files + i * new_num_files
             mean = total_files - new_num_files / 2
             
-            normal_sample = np.round(np.random.normal(mean,sd,2000)).astype(int)
+            normal_sample = np.round(np.random.normal(mean,sd,3000)).astype(int)
             for j in range(len(normal_sample)):
                 if normal_sample[j] > total_files:
                     normal_sample[j] = total_files - (normal_sample[j] - total_files)
