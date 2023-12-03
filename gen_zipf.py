@@ -85,7 +85,7 @@ class gen_zipf():
             plt.show()
             plt.close()
         """
-        sd = 1000
+        sd = 400
         mean1 = 1500
         mean2 = 3500
         requests1 = []
@@ -97,6 +97,16 @@ class gen_zipf():
             elif normal_sample1[i] < 0:
                 normal_sample1[i] = abs(normal_sample1[i])
         requests1 = requests1 + normal_sample1.tolist()
+
+        if self.DEBUG:
+            print("============================DEBUG===================================")
+            print("In gen_zipf -> generate_varPopulation_request -> second population")
+            #plot distribtuion
+            count = np.bincount(requests1)
+            k = np.arange(max(requests1)+1)
+            plt.bar(k,count)
+            plt.show()
+            plt.close()
 
         normal_sample2 = np.round(np.random.normal(mean2,sd,5000)).astype(int)
         for i in range(len(normal_sample2)):
@@ -239,6 +249,6 @@ if __name__ == "__main__":
     args = sys.argv
     file_name = args[1]
     zipf = gen_zipf(0.8,5000,5000,True)
-    #zipf.generate_varPopulation_request(file_name)
+    zipf.generate_varPopulation_request(file_name)
     #zipf.generate_2var_normal_distrib(save_name = file_name)
-    zipf.generate_var_normal_distrib(save_name = file_name)
+    #zipf.generate_var_normal_distrib(save_name = file_name)

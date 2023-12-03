@@ -4,7 +4,7 @@ from gen_zipf import gen_zipf
 import sys
 import gc
 
-def offline(cache_size, model, dataset,para):
+def offline(cache_size, model, dataset):
     max_episodes = 10
     tau = 0.1
     knn = 0.1
@@ -56,7 +56,7 @@ def online(cache_size,model,dataset,para):
         return
     
     env = cache_env(cache_size, requests_list, model, False, reward_fac,True)
-    drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
+    drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau, dataset)
     hit_rate = drl_wol.online_learning()
     if model == "paper":
         f=open("paper_hitrate.txt","a")
@@ -74,13 +74,11 @@ if __name__ == "__main__":
     model = args[2]
     dataset = args[3]
     mode = args[4]
-    #para = float(args[5])
-    para = None
 
     if mode == "train":
         #run training
-        offline(cache_size,model,dataset,para)
+        offline(cache_size,model,dataset)
     elif mode == "online":
-        online(cache_size,model,dataset,para)
+        online(cache_size,model,dataset)
     else:
         print("error args")

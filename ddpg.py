@@ -12,7 +12,7 @@ tf.keras.backend.set_floatx('float64')
 
 #this class implements ddpg functionality which create actor-critic netowrk and also target network and brain for replay
 class ddpg:
-    def __init__(self, state_shape, cache_size, model="new", DEBUG=False, gamma=0.9, tau=0.001):
+    def __init__(self, state_shape, cache_size, model="new", DEBUG=False, gamma=0.9, tau=0.001, dataset=""):
 
         self.actor = actor_network(state_shape, cache_size, model, DEBUG)
         self.actor_t = actor_network(state_shape, cache_size, model, DEBUG)
@@ -24,6 +24,7 @@ class ddpg:
         self.DEBUG = DEBUG
         self.tau = tau
         self.model = model
+        self.dataset = dataset
 
         self.update_target_para(self.actor.model, self.actor_t.model, tau=1.)
         self.update_target_para(self.critic.model, self.critic_t.model, tau=1.)
@@ -43,25 +44,25 @@ class ddpg:
         target_model.set_weights(target_paras)
     
     def save_model(self):
-        self.actor.model.save_weights('offline_model/actor.h5')
-        self.critic.model.save_weights('offline_model/critic.h5')
+        self.actor.model.save_weights('offline_model/'+self.dataset+'_actor.h5')
+        self.critic.model.save_weights('offline_model/'+self.dataset+'_critic.h5')
     
     def save_model_paper(self):
-        self.actor.model.save_weights('offline_model/actor_paper.h5')
-        self.critic.model.save_weights('offline_model/critic_paper.h5')
+        self.actor.model.save_weights('offline_model/'+self.dataset+'_actor_paper.h5')
+        self.critic.model.save_weights('offline_model/'+self.dataset+'_critic_paper.h5')
     
     def load_model(self):
-        self.actor.model.load_weights('offline_model/actor.h5')
-        self.actor_t.model.load_weights('offline_model/actor.h5')
-        self.critic.model.load_weights('offline_model/critic.h5')
-        self.critic.model.load_weights('offline_model/critic.h5')
+        self.actor.model.load_weights('offline_model/'+self.dataset+'_actor.h5')
+        self.actor_t.model.load_weights('offline_model/'+self.dataset+'_actor.h5')
+        self.critic.model.load_weights('offline_model/'+self.dataset+'_critic.h5')
+        self.critic.model.load_weights('offline_model/'+self.dataset+'_critic.h5')
 
     
     def load_model_paper(self):
-        self.actor.model.load_weights('offline_model/actor_paper.h5')
-        self.actor_t.model.load_weights('offline_model/actor_paper.h5')
-        self.critic.model.load_weights('offline_model/critic_paper.h5')
-        self.critic.model.load_weights('offline_model/critic_paper.h5')
+        self.actor.model.load_weights('offline_model/'+self.dataset+'_actor_paper.h5')
+        self.actor_t.model.load_weights('offline_model/'+self.dataset+'_actor_paper.h5')
+        self.critic.model.load_weights('offline_model/'+self.dataset+'_critic_paper.h5')
+        self.critic.model.load_weights('offline_model/'+self.dataset+'_critic_paper.h5')
 
     
     #DDPG replay function, memorize from brain, then predict and evaluate again and update parameter

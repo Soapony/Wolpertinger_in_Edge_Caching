@@ -5,7 +5,7 @@ if __name__ == "__main__":
     args = sys.argv
     dataset = int(args[1])
     if dataset == 1:
-        cmd = "rm offline_model/*"
+        cmd = "rm offline_model/zipf*"
         os.system(cmd)
         cmd = "python3 main.py 150 paper zipf train"
         os.system(cmd)
@@ -19,7 +19,7 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "mv result/hitrate_compare.png result/C150_zipf_online.png"
         os.system(cmd)
-        cmd = "rm offline_model/*"
+        cmd = "rm offline_model/varPop*"
         os.system(cmd)
         cmd = "python3 main.py 150 paper varPop train"
         os.system(cmd)
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "mv result/hitrate_compare.png result/C150_varPop_online.png"
         os.system(cmd)
-        cmd = "rm offline_model/*"
+        cmd = "rm offline_model/varNor*"
         os.system(cmd)
         cmd = "python3 main.py 150 paper varNor train"
         os.system(cmd)
@@ -46,6 +46,20 @@ if __name__ == "__main__":
         cmd = "python3 plotGraph.py"
         os.system(cmd)
         cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
+        os.system(cmd)
+        cmd = "rm offline_model/2varNor*"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper 2varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 paper 2varNor online"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new 2varNor train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new 2varNor online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+        cmd = "mv result/hitrate_compare.png result/hitrate_respond_speed.png"
         os.system(cmd)
     if dataset == 2:
         os.system("rm *.txt")
@@ -80,7 +94,7 @@ if __name__ == "__main__":
         #cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
         #os.system(cmd)
     if dataset == 4:
-        cmd = "rm offline_model/*"
+        cmd = "rm offline_model/2varNor*"
         os.system(cmd)
         cmd = "python3 main.py 150 paper 2varNor train"
         os.system(cmd)

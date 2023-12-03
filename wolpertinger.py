@@ -4,7 +4,7 @@ import gc
 
 #this class implements wolpertinger architecture
 class wolpertinger:
-    def __init__(self, cache_env, cache_size, model="new", DEBUG=False, KNN_fraction = 0.2, gamma = 0.9, tau=0.001):
+    def __init__(self, cache_env, cache_size, model="new", DEBUG=False, KNN_fraction = 0.2, gamma = 0.9, tau=0.001, dataset=""):
         self.env = cache_env
         self.KNN_fraction = KNN_fraction
         self.cache_size = cache_size
@@ -16,7 +16,7 @@ class wolpertinger:
         self.tau = tau
         self.model = model
 
-        self.ddpg = ddpg(self.state_shape, self.cache_size, model, self.DEBUG, gamma, self.tau)
+        self.ddpg = ddpg(self.state_shape, self.cache_size, model, self.DEBUG, gamma, self.tau, dataset)
         self.knn = knn(self.cache_size, self.K,self.DEBUG)
 
         if self.DEBUG:
