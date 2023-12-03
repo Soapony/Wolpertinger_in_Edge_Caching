@@ -90,7 +90,7 @@ class gen_zipf():
         mean2 = 3500
         requests1 = []
         requests2 = []
-        normal_sample1 = np.round(np.random.normal(mean1,sd,5000)).astype(int)
+        normal_sample1 = np.round(np.random.normal(mean1,sd,3000)).astype(int)
         for i in range(len(normal_sample1)):
             if normal_sample1[i] > self.num_files:
                 normal_sample1[i] = self.num_files - (normal_sample1[i] - self.num_files)
@@ -108,7 +108,7 @@ class gen_zipf():
             plt.show()
             plt.close()
 
-        normal_sample2 = np.round(np.random.normal(mean2,sd,5000)).astype(int)
+        normal_sample2 = np.round(np.random.normal(mean2,sd,7000)).astype(int)
         for i in range(len(normal_sample2)):
             if normal_sample2[i] > self.num_files:
                 normal_sample2[i] = self.num_files - (normal_sample2[i] - self.num_files)
@@ -146,25 +146,58 @@ class gen_zipf():
             total_files = self.num_files + i * new_num_files
             mean = total_files - new_num_files / 2
             
-            normal_sample = np.round(np.random.normal(mean,sd,3000)).astype(int)
+            normal_sample = np.round(np.random.normal(mean,sd,6000)).astype(int)
             for j in range(len(normal_sample)):
                 if normal_sample[j] > total_files:
                     normal_sample[j] = total_files - (normal_sample[j] - total_files)
             requests = requests + normal_sample.tolist()
+        
+        req1=[]
+        req2=[]
+        for i in range(0,len(requests),2):
+            req1.append(requests[i])
+        
+        for i in range(1,len(requests),2):
+            req2.append(requests[i])
             
-            if self.DEBUG:
-                print("============================DEBUG===================================")
-                print("In gen_zipf -> generate_request_var_normal_distrib")
-                count = np.bincount(normal_sample)
-                k = np.arange(max(normal_sample)+1)
-                plt.bar(k,count)
-                plt.show()
-                plt.close()
+        if self.DEBUG:
+            print("============================DEBUG===================================")
+            print("In gen_zipf -> generate_request_var_normal_distrib")
+            count = np.bincount(requests)
+            k = np.arange(max(requests)+1)
+            plt.bar(k,count)
+            plt.show()
+            plt.close()
+        
+        if self.DEBUG:
+            print("============================DEBUG===================================")
+            print("In gen_zipf -> generate_request_var_normal_distrib")
+            count = np.bincount(req1)
+            k = np.arange(max(req1)+1)
+            plt.bar(k,count)
+            plt.show()
+            plt.close()
+        
+        if self.DEBUG:
+            print("============================DEBUG===================================")
+            print("In gen_zipf -> generate_request_var_normal_distrib")
+            count = np.bincount(req2)
+            k = np.arange(max(req2)+1)
+            plt.bar(k,count)
+            plt.show()
+            plt.close()
             
         if(save_name is not None):
-            f=open(save_name, "w")
-            for request in requests:
-                f.write(str(request)+" ")
+            f=open(save_name+".txt", "w")
+            for req in req1:
+                f.write(str(req)+" ")
+            f.write("\n")
+            f.close()
+        
+        if(save_name is not None):
+            f=open(save_name+"2.txt", "w")
+            for req in req1:
+                f.write(str(req)+" ")
             f.write("\n")
             f.close()
 
@@ -249,6 +282,6 @@ if __name__ == "__main__":
     args = sys.argv
     file_name = args[1]
     zipf = gen_zipf(0.8,5000,5000,True)
-    zipf.generate_varPopulation_request(file_name)
+    #zipf.generate_varPopulation_request(file_name)
     #zipf.generate_2var_normal_distrib(save_name = file_name)
-    #zipf.generate_var_normal_distrib(save_name = file_name)
+    zipf.generate_var_normal_distrib(save_name = file_name)
