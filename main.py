@@ -24,7 +24,7 @@ def offline(cache_size, model, dataset):
         return
     
     env = cache_env(cache_size, requests_list, model, False, reward_fac)
-    drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau)
+    drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau, dataset)
     hit_rate = drl_wol.offline_train(max_episodes)
 
     env.clean()
@@ -38,7 +38,7 @@ def offline(cache_size, model, dataset):
 
     return
 
-def online(cache_size,model,dataset,para):
+def online(cache_size,model,dataset):
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9

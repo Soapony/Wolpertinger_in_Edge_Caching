@@ -159,15 +159,6 @@ class gen_zipf():
         
         for i in range(1,len(requests),2):
             req2.append(requests[i])
-            
-        if self.DEBUG:
-            print("============================DEBUG===================================")
-            print("In gen_zipf -> generate_request_var_normal_distrib")
-            count = np.bincount(requests)
-            k = np.arange(max(requests)+1)
-            plt.bar(k,count)
-            plt.show()
-            plt.close()
         
         if self.DEBUG:
             print("============================DEBUG===================================")
