@@ -28,6 +28,11 @@ class wolpertinger:
             print("state shape = ",self.state_shape)
     
     def offline_train(self, max_episodes):
+        if self.model == "paper":
+            self.ddpg.load_model_paper()
+        else:
+            self.ddpg.load_model()
+
         episodes, total_rewards, done = 0, 0.0, False
         #state is flatten and state shape is (3C,)
         current_state, done = self.env.reset()

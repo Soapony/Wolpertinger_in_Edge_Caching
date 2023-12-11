@@ -5,7 +5,7 @@ import sys
 import gc
 
 def offline(cache_size, model, dataset):
-    max_episodes = 10
+    max_episodes = 5
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9
