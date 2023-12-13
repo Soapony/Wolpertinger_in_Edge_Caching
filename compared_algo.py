@@ -59,7 +59,7 @@ class FIFO:
 
 if __name__ == "__main__":
     zipf = gen_zipf(1.3, 10000, 5000,False)
-    requests_list = zipf.load_request("data/training_data2.txt")
+    requests_list = zipf.load_request("data/training_data_2varNormal2.txt")
     cache_size = 150
     lru = LRU(cache_size)
     lfu = LFU(cache_size)

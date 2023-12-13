@@ -1,6 +1,7 @@
 from ddpg import ddpg
 from knn import knn
 import gc
+import os.path
 
 #this class implements wolpertinger architecture
 class wolpertinger:
@@ -15,6 +16,7 @@ class wolpertinger:
         self.actual_rewards=[]
         self.tau = tau
         self.model = model
+        self.dataset = dataset
 
         self.ddpg = ddpg(self.state_shape, self.cache_size, model, self.DEBUG, gamma, self.tau, dataset)
         self.knn = knn(self.cache_size, self.K,self.DEBUG)
@@ -29,9 +31,11 @@ class wolpertinger:
     
     def offline_train(self, max_episodes):
         if self.model == "paper":
-            self.ddpg.load_model_paper()
+            if(os.path.isfile("offline_model/"+self.dataset+"_actor_paper.h5")):
+                self.ddpg.load_model_paper()
         else:
-            self.ddpg.load_model()
+            if(os.path.isfile("offline_model/"+self.dataset+"_actor.h5")):
+                self.ddpg.load_model()
 
         episodes, total_rewards, done = 0, 0.0, False
         #state is flatten and state shape is (3C,)

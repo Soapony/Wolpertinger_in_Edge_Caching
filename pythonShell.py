@@ -5,6 +5,7 @@ if __name__ == "__main__":
     args = sys.argv
     dataset = int(args[1])
     if dataset == 1:
+        """
         cmd = "rm offline_model/zipf*"
         os.system(cmd)
         cmd = "python3 main.py 150 paper zipf train"
@@ -19,6 +20,7 @@ if __name__ == "__main__":
         os.system(cmd)
         cmd = "mv result/hitrate_compare.png result/C150_zipf_online.png"
         os.system(cmd)
+        """
         cmd = "rm offline_model/varPop*"
         os.system(cmd)
         cmd = "python3 main.py 150 paper varPop train"
@@ -94,7 +96,7 @@ if __name__ == "__main__":
         #cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
         #os.system(cmd)
     if dataset == 4:
-        for i in range(2):
+        for i in range(3):
             cmd = "python3 main.py 150 paper varPop train"
             os.system(cmd)
             cmd = "python3 main.py 150 new varPop train"
