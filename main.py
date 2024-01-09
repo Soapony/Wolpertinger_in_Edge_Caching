@@ -5,7 +5,7 @@ import sys
 import gc
 
 def offline(cache_size, model, dataset):
-    max_episodes = 5
+    max_episodes = 1
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9
@@ -32,10 +32,6 @@ def offline(cache_size, model, dataset):
     del env
     del drl_wol
     gc.collect()
-
-    print("------------------------DEBUG--------------------------")
-    print("hit rate: ", hit_rate)
-
     return
 
 def online(cache_size,model,dataset):

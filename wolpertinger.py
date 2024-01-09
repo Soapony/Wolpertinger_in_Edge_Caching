@@ -137,12 +137,12 @@ class wolpertinger:
 
             current_state = next_state
             total_rewards += reward
-
+        """
         if self.model == "paper":
             self.ddpg.save_model_paper()
         else:
             self.ddpg.save_model()
-            
+        """
         cur_hit_rate = self.env.get_hit_rate()
         print("total rewards:"+str(total_rewards)+" hit rate:"+str(cur_hit_rate))
         if self.model == "paper":
@@ -153,7 +153,6 @@ class wolpertinger:
             f = open("result/new_hit_history.txt","w")
             f.write(str(self.env.get_hit_history())+"\n")
             f.close()
-
         return cur_hit_rate
 
     def clean(self):

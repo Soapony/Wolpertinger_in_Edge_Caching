@@ -2,6 +2,7 @@ import time
 import numpy as np
 from collections import deque
 from gen_zipf import gen_zipf
+import sys
 
 class LRU:
     def __init__(self,cache_size):
@@ -58,9 +59,10 @@ class FIFO:
         return False
 
 if __name__ == "__main__":
+    args = sys.argv
+    cache_size = int(args[1])
     zipf = gen_zipf(1.3, 10000, 5000,False)
-    requests_list = zipf.load_request("data/training_data_2varNormal2.txt")
-    cache_size = 150
+    requests_list = zipf.load_request("data/training_data_varNormal2.txt")
     lru = LRU(cache_size)
     lfu = LFU(cache_size)
     fifo = FIFO(cache_size)
@@ -96,7 +98,13 @@ if __name__ == "__main__":
         fifo_history.append(float(fifo_hit / total_count))
         
     f=open("result/compared_algo.txt","w")
+    
     f.write(str(lfu_history)+"\n")
     f.write(str(lru_history)+"\n")
     f.write(str(fifo_history)+"\n")
+    """
+    f.write(str(lfu_hit / total_count)+" ")
+    f.write(str(lru_hit / total_count)+" ")
+    f.write(str(fifo_hit / total_count)+"\n")
+    """
     f.close()
