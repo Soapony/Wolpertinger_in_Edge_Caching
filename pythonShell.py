@@ -66,7 +66,7 @@ if __name__ == "__main__":
         #os.system(cmd)
         
     if dataset == 4:
-        for i in range(10):
+        for i in range(15):
             cmd = "python3 main.py 150 paper zipf train"
             os.system(cmd)
             cmd = "python3 main.py 150 new zipf train"
