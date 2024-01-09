@@ -108,9 +108,9 @@ if __name__ == "__main__":
         os.system(cmd)
         """
     if dataset == 2:
-        cmd = "python3 main.py 150 paper 2varNor online"
+        cmd = "python3 main.py 150 paper zipf online"
         os.system(cmd)
-        cmd = "python3 main.py 150 new 2varNor online"
+        cmd = "python3 main.py 150 new zipf online"
         os.system(cmd)
         cmd = "python3 plotGraph.py 1"
         os.system(cmd)
