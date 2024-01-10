@@ -4,7 +4,7 @@ from scipy import stats
 if __name__ == "__main__":
     #f=open("result/paper_zipf_hitrate.txt","r")
     #f=open("result/paper_varPop_hitrate.txt","r")
-    f=open("result/paper_hitrate.txt","r")
+    f=open("paper_hitrate.txt","r")
     line=f.readline()
     paper_hitrate = line.split(" ")
     paper_hitrate = paper_hitrate[:-1]
