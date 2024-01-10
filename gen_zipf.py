@@ -56,7 +56,7 @@ class gen_zipf():
         
         if(save_name is not None):
             f=open(save_name+"2.txt", "w")
-            for request in req1:
+            for request in req2:
                 f.write(str(request)+" ")
             f.write("\n")
             f.close()
