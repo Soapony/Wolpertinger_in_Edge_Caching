@@ -4,66 +4,6 @@ import sys
 if __name__ == "__main__":
     args = sys.argv
     dataset = int(args[1])
-    if dataset == 1:
-        """
-        cmd = "rm offline_model/zipf*"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper zipf train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper zipf online"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new zipf train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new zipf online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py 1"
-        os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_zipf_online.png"
-        os.system(cmd)
-        
-        cmd = "rm offline_model/varPop*"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper varPop train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper varPop online"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varPop train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varPop online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py 1"
-        os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_varPop_online.png"
-        os.system(cmd)
-        cmd = "rm offline_model/varNor*"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper varNor train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 paper varNor online"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor train"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py 1"
-        os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
-        os.system(cmd)
-        """
-        #cmd = "rm offline_model/2varNor*"
-        #os.system(cmd)
-        #cmd = "python3 main.py 150 paper 2varNor train"
-        #os.system(cmd)
-        cmd = "python3 main.py 150 paper 2varNor online"
-        os.system(cmd)
-        #cmd = "python3 main.py 150 new 2varNor train"
-        #os.system(cmd)
-        cmd = "python3 main.py 150 new 2varNor online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py 1"
-        os.system(cmd)
-        #cmd = "mv result/hitrate_compare.png result/hitrate_respond_speed.png"
-        #os.system(cmd)
         
     if dataset == 4:
         for i in range(15):
