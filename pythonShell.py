@@ -61,9 +61,9 @@ if __name__ == "__main__":
         cmd = "touch new_hitrate.txt paper_hitrate.txt"
         os.system(cmd)
         for i in range(10):
-            cmd = "python3 main.py 150 paper varNor online"
+            cmd = "python3 main.py 150 paper zipf online"
             os.system(cmd)
-            cmd = "python3 main.py 150 new varNor online"
+            cmd = "python3 main.py 150 new zipf online"
             os.system(cmd)
         
 
