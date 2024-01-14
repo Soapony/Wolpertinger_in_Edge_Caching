@@ -2,8 +2,6 @@ import numpy as np
 import random
 import copy
 
-
-
 class OrnsteinUhlenbeckProcess(object):
     def __init__(self, size=1, mu=0., theta=0.3, sigma=0.9):
         self.mu = mu*np.ones(size)

@@ -2,10 +2,9 @@ from wolpertinger import wolpertinger
 from cache_env import cache_env
 from gen_zipf import gen_zipf
 import sys
-import gc
 
 def offline(cache_size, model, dataset):
-    max_episodes = 1
+    max_episodes = 15
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9
@@ -23,15 +22,9 @@ def offline(cache_size, model, dataset):
         print("error args")
         return
     
-    env = cache_env(cache_size, requests_list, model, False, reward_fac)
-    drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau, dataset)
-    hit_rate = drl_wol.offline_train(max_episodes)
-
-    env.clean()
-    drl_wol.clean()
-    del env
-    del drl_wol
-    gc.collect()
+    env = cache_env(cache_size, requests_list, model, reward_fac)
+    drl_wol = wolpertinger(env, cache_size, model, knn, gamma, tau)
+    drl_wol.offline_train(max_episodes)
     return
 
 def online(cache_size,model,dataset):
@@ -51,8 +44,8 @@ def online(cache_size,model,dataset):
     else:
         return
     
-    env = cache_env(cache_size, requests_list, model, False, reward_fac,True)
-    drl_wol = wolpertinger(env, cache_size, model, False, knn, gamma, tau, dataset)
+    env = cache_env(cache_size, requests_list, model, reward_fac, True)
+    drl_wol = wolpertinger(env, cache_size, model, knn, gamma, tau)
     hit_rate = drl_wol.online_learning()
     if model == "paper":
         f=open("paper_hitrate.txt","a")

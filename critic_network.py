@@ -1,11 +1,8 @@
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Concatenate
 from tensorflow.keras.optimizers import Adam
 import numpy as np
-import gc
 
 tf.keras.backend.set_floatx('float64')
 
@@ -14,7 +11,6 @@ class critic_network:
             self,
             state_shape,
             framework="new",
-            DEBUG=False,
             lr=1e-3
     ):
         self.learning_rate = lr
@@ -26,20 +22,12 @@ class critic_network:
         self.l_units512 = 512
         self.l_units1024 = 1024
         self.l_units2048 = 2048
-        self.DEBUG = DEBUG
 
         if framework == "paper":
             self.model = self.create_paper_critic_network()
         else:
             self.model = self.create_critic_network()
         self.optimizer = Adam(learning_rate=lr)
-        if self.DEBUG:
-            print("============================DEBUG===================================")
-            print("Critic network initialization summry:")
-            print("learning rate = ",self.learning_rate)
-            print("state_shape = ",self.state_shape)
-            print("model summary:")
-            print(self.model.summary())
     
     #create critic network by using tensorFlow keras
     def create_critic_network(self):
@@ -89,25 +77,4 @@ class critic_network:
         q_values = self.model.predict([state, action_space])
         index = np.argmax(q_values)
         q_value = q_values[index][0]
-        if self.DEBUG:
-            print("============================DEBUG===================================")
-            print("In critic network -> get_best_q_value_and_action_index")
-            print("q values = ",q_values)
-            print("index = ",index)
-            print("q value = ",q_value)
         return index, q_value
-    
-    def clean(self):
-        del self.learning_rate
-        del self.state_shape
-        del self.l_units32
-        del self.l_units64
-        del self.l_units128
-        del self.l_units256
-        del self.l_units512
-        del self.l_units1024
-        del self.l_units2048
-        del self.DEBUG
-        del self.model
-        del self.optimizer
-        gc.collect()

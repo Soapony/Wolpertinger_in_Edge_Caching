@@ -1,11 +1,8 @@
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense
 from tensorflow.keras.optimizers import Adam
 import numpy as np
-import gc
 from OU import OrnsteinUhlenbeckProcess
 
 tf.keras.backend.set_floatx('float64')
@@ -16,7 +13,6 @@ class actor_network:
             state_shape,
             cache_size,
             framework="new",
-            DEBUG=False,
             lr=1e-4
     ):
         self.learning_rate = lr
@@ -29,7 +25,6 @@ class actor_network:
         self.l_units1024 = 1024
         self.l_units2048 = 2048
         self.cache_size = cache_size
-        self.DEBUG = DEBUG
         self.noise = OrnsteinUhlenbeckProcess()
         self.noise.reset()
         self.epsilon = 1.0
@@ -41,14 +36,6 @@ class actor_network:
         else:
             self.model = self.create_actor_network()
         self.optimizer = Adam(learning_rate=lr)
-        if self.DEBUG:
-            print("============================DEBUG===================================")
-            print("Actor network initialization summry:")
-            print("learning rate = ",self.learning_rate)
-            print("state_shape = ",self.state_shape)
-            print("cache size = ",self.cache_size)
-            print("model summary:")
-            print(self.model.summary())
 
     #create actor network by using tensorFlow keras   
     def create_actor_network(self):
@@ -80,31 +67,10 @@ class actor_network:
         state = state.reshape((1,len(state)))
         tmp_act = float(np.absolute(self.model.predict(state) - self.noise.generate() * self.epsilon))
         action = round(tmp_act * self.cache_size)
-
         self.noise.reset()
 
-        if self.DEBUG:
-            print("============================DEBUG===================================")
-            print("In actor_network -> get_proto_actor")
-            print("action = ",action)
         return np.clip(action, 0, self.cache_size)
     
     def epsilon_decrease(self):
         if self.epsilon - self.epsilon_decay > self.min_epsilon:
             self.epsilon -= self.epsilon_decay
-    
-    def clean(self):
-        del self.learning_rate
-        del self.state_shape
-        del self.l_units32
-        del self.l_units64
-        del self.l_units128
-        del self.l_units256
-        del self.l_units512
-        del self.l_units1024
-        del self.l_units2048
-        del self.cache_size
-        del self.DEBUG
-        del self.model
-        del self.optimizer
-        gc.collect()
