@@ -4,8 +4,8 @@ import numpy as np
 #plot the graph of two approaches' cahce hit rates in the whole online phase
 if __name__ == "__main__":
     #read and process the data
-    f = open("result/paper_hit_history.txt","r")
-    f2 = open("result/new_hit_history.txt","r")
+    f = open("result/original_hit_history.txt","r")
+    f2 = open("result/proposed_hit_history.txt","r")
     lines = f.readlines()
     lines2 = f2.readlines()
     history = []

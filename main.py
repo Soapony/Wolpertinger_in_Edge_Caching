@@ -67,7 +67,7 @@ if __name__ == "__main__":
     dataset = args[3]   #select request pattern
     phase = args[4]     #run in offline or online phase
 
-    if phase == "train":
+    if phase == "offline":
         offline(cache_size,model,dataset)
     elif phase == "online":
         online(cache_size,model,dataset)
