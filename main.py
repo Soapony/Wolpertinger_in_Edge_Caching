@@ -1,58 +1,60 @@
 from wolpertinger import wolpertinger
 from cache_env import cache_env
-from gen_zipf import gen_zipf
+from generate_data import generate_data
 import sys
 
+#offline phase training
 def offline(cache_size, model, dataset):
     max_episodes = 15
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9
     gamma = 0.99
-    zipf = gen_zipf(1.3, 10000, 5000)
+    gen_data = generate_data(1.3, 10000, 5000)
+    #load requests
     if dataset == "zipf":
-        requests_list = zipf.load_request("data/training_data.txt")
-    elif dataset == "varPop":
-        requests_list = zipf.load_request("data/training_data_varPopulation.txt")
+        requests_list = gen_data.load_request("data/request_data_zipf.txt")
     elif dataset == "varNor":
-        requests_list = zipf.load_request("data/training_data_varNormal.txt")
+        requests_list = gen_data.load_request("data/request_data_varNormal.txt")
     elif dataset == "2varNor":
-        requests_list = zipf.load_request("data/training_data_2varNormal.txt")
+        requests_list = gen_data.load_request("data/request_data_mix.txt")
     else:
         print("error args")
         return
-    
+    #initilize environment and DRL agent
     env = cache_env(cache_size, requests_list, model, reward_fac)
     drl_wol = wolpertinger(env, cache_size, model, knn, gamma, tau)
+    #start training
     drl_wol.offline_train(max_episodes)
     return
 
+#online phase testing
 def online(cache_size,model,dataset):
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9
     gamma = 0.99
-    zipf = gen_zipf(1.3, 10000, 5000)
-    if dataset == "varPop":
-        requests_list = zipf.load_request("data/training_data_varPopulation2.txt")
-    elif dataset == "varNor":
-        requests_list = zipf.load_request("data/training_data_varNormal2.txt")
+    gen_data = generate_data(1.3, 10000, 5000)
+    if dataset == "varNor":
+        requests_list = gen_data.load_request("data/request_data_varNormal2.txt")
     elif dataset == "zipf":
-        requests_list = zipf.load_request("data/training_data2.txt")
-    elif dataset == "2varNor":
-        requests_list = zipf.load_request("data/training_data_2varNormal2.txt")
+        requests_list = gen_data.load_request("data/request_data_zipf2.txt")
+    elif dataset == "mix":
+        requests_list = gen_data.load_request("data/request_data_mix2.txt")
     else:
         return
-    
-    env = cache_env(cache_size, requests_list, model, reward_fac, True)
+    #initilize environment and DRL agent
+    env = cache_env(cache_size, requests_list, model, reward_fac)
     drl_wol = wolpertinger(env, cache_size, model, knn, gamma, tau)
+    #start online phase
     hit_rate = drl_wol.online_learning()
-    if model == "paper":
-        f=open("paper_hitrate.txt","a")
+    #save the final cache hit rate
+    if model == "original":
+        f=open("original_hitrate.txt","w")
         f.write(str(hit_rate)+" ")
         f.close()
     else:
-        f=open("new_hitrate.txt","a")
+        f=open("proposed_hitrate.txt","w")
         f.write(str(hit_rate)+" ")
         f.close()
     return
@@ -60,14 +62,13 @@ def online(cache_size,model,dataset):
 if __name__ == "__main__":
     args = sys.argv
     cache_size = int(args[1])
-    model = args[2]
-    dataset = args[3]
-    mode = args[4]
+    model = args[2]     #select the DRL agent from original framework or proposed method
+    dataset = args[3]   #select request pattern
+    phase = args[4]     #run in offline or online phase
 
-    if mode == "train":
-        #run training
+    if phase == "train":
         offline(cache_size,model,dataset)
-    elif mode == "online":
+    elif phase == "online":
         online(cache_size,model,dataset)
     else:
         print("error args")
