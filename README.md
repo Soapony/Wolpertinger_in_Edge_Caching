@@ -55,11 +55,22 @@ run by python3 to plot the graph showing the performance of the two approaches i
 		python3 plotGraph.py
 
 ## Example:
-Since the repository already has generated data and trained model, run the online testing of two approaches by:
+Since the repository already has generated data and trained models<br>
+To use the existing models, modify the models' file names by removing the prefix, e.g. zipf_actor.h5 -> actor.h5, zipf_critic_original.h5 -> critic_original.h5<br>
+Then run the online testing of two approaches by:
 
 		python3 main.py 150 proposed zipf online
 		python3 main.py 150 original zipf online
 
 show the results on the graph by:
 
+		python3 plotGraph.py
+
+If run it from generating data, for a Zipf request pattern:
+
+		python3 generate_data.py zipf data/request_data_zipf
+		python3 main.py 150 original zipf offline
+		python3 main.py 150 proposed zipf offline
+		python3 main.py 150 original zipf online
+		python3 main.py 150 proposed zipf online
 		python3 plotGraph.py
