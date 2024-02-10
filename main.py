@@ -16,7 +16,7 @@ def offline(cache_size, model, dataset):
         requests_list = gen_data.load_request("data/request_data_zipf.txt")
     elif dataset == "varNor":
         requests_list = gen_data.load_request("data/request_data_varNormal.txt")
-    elif dataset == "2varNor":
+    elif dataset == "mix":
         requests_list = gen_data.load_request("data/request_data_mix.txt")
     else:
         print("error args")
@@ -42,6 +42,7 @@ def online(cache_size,model,dataset):
     elif dataset == "mix":
         requests_list = gen_data.load_request("data/request_data_mix2.txt")
     else:
+        print("error args")
         return
     #initilize environment and DRL agent
     env = cache_env(cache_size, requests_list, model, reward_fac)

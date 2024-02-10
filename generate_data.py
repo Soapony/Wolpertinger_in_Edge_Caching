@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import sys
 
 class generate_data():
     
@@ -8,7 +9,7 @@ class generate_data():
         self.size = size            #num of request
         self.num_files = num_files  #total number of files
 
-    def generate_zipf_pattern(self,save_name = None):
+    def generate_zipf_pattern(self,save_name):
         #generate zipf distribution
         denominator_sum = sum(1.0 / (i ** self.param) for i in range(1,self.num_files+1))
         pdf = [(1.0 / (i ** self.param)) / denominator_sum for i in range(1,self.num_files+1)]
@@ -44,7 +45,7 @@ class generate_data():
         return requests
     
     #generate variable normal distribution patter
-    def generate_var_normal_distrib(self, new_num_files = 100, round = 3, save_name = None):
+    def generate_var_normal_distrib(self, save_name, new_num_files = 100, round = 3):
         sd = 150
         requests=[]
 
@@ -86,7 +87,8 @@ class generate_data():
 
         return requests
 
-    def generate_mix_distrib(self, save_name = None, new_num_files = 100):
+    def generate_mix_distrib(self, save_name, new_num_files = 100):
+        self.param = 0.8
         #generate zipf distribution
         denominator_sum = sum(1.0 / (i ** self.param) for i in range(1,self.num_files+1))
         pdf = [(1.0 / (i ** self.param)) / denominator_sum for i in range(1,self.num_files+1)]
@@ -143,3 +145,17 @@ class generate_data():
         f.close()
 
         return requests
+
+if __name__ == "__main__":
+    args = sys.argv
+    pattern = args[1]
+    file_name = args[2]
+    gen_data = generate_data(1.3,10000,5000)
+    if pattern == "zipf":
+        gen_data.generate_zipf_pattern(file_name)
+    elif pattern == "varNor":
+        gen_data.generate_var_normal_distrib(file_name)
+    elif pattern == "mix":
+        gen_data.generate_mix_distrib(file_name)
+    else:
+        print("error args")
