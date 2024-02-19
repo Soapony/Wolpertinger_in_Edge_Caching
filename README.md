@@ -22,7 +22,8 @@
 - result/
   - *.hitrate.txt: They are the cache hit rates of both approaches after the online phase, used for hypothesis testing
   - *.png: They are the graph plot by plotGraph.py showing the online performance of both approaches
-  - other txt files: They are the cache hit rates achieved by different hyperparameters. Have a clear understanding in the Dissertation, DRL algorithm Setup section.
+  - *_offline_final_hitrate.txt: They are the cache hit rates at the end of the offline training in both approaches and different request patterns
+  - other txt files: They are the cache hit rates achieved by different hyperparameters. To have a clear understanding, read the Dissertation, DRL algorithm Setup section.
 
 ## Usage:
 - main.py<br>
