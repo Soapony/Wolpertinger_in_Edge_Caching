@@ -57,7 +57,7 @@ class cache_env():
             #reach the last state, no more next state
             done = True
             #To avoid network shape error and the batch size dismatch, get a meaningless next_state
-            next_state = self.get_state_space()
+            next_state = self.get_state_space(None)
             #no more requests so reward remains 0
         else:
             #calculate combined rewards
@@ -99,21 +99,45 @@ class cache_env():
             tmp_ind += 1
         return hit_count
     
-    def get_state_space(self):
+    def get_state_space(self,cur_req_item_feature):
         #transform feature space dict into state space format
         flatten_feature_space = np.concatenate(list(self.feature_space.values()))
         #add current request feature to the front
-        state_space = np.insert(flatten_feature_space,0,[0]*len(self.terms))
-        return state_space
+        if(cur_req_item_feature == None):
+            return np.insert(flatten_feature_space,0,[0]*len(self.terms))
+        else:
+            return np.insert(flatten_feature_space,0,cur_req_item_feature)
     
     def get_next_state(self):
         self.run_until_miss_and_cache_full()
         done = False
+        cur_req_item_feature = None
         if(self.cur_req_ind == self.last_req_ind+1):
             #hit all remaining requests, done
             #no more next state, get a latest feature state to avoid Error
             done = True
-        return self.get_state_space(), done
+        else:
+            #count the features of the current request content in the most recent 10,100,1000 requests
+            content_id = self.all_requests[self.cur_req_ind]
+            short_term = self.terms[0]
+            median_term = self.terms[1]
+            long_term = self.terms[2]
+            cur_req_item_feature = [0,0,0]
+            index=self.cur_req_ind-1
+            while(index > -1 and long_term > 0):
+                if(self.all_requests[index] == content_id):
+                    if(short_term > 0):
+                        cur_req_item_feature[0]+=1
+                    if(median_term > 0):
+                        cur_req_item_feature[1]+=1
+                    if(long_term > 0):
+                        cur_req_item_feature[2]+=1
+                short_term-=1
+                long_term-=1
+                median_term-=1
+                index-=1
+
+        return self.get_state_space(cur_req_item_feature), done
     
     #keep serving the requests which hit the cache or still have storage
     def run_until_miss_and_cache_full(self):

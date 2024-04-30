@@ -49,6 +49,10 @@ if __name__ == "__main__":
         os.system(cmd)
         """
     if dataset == 2:
+        cmd = "python3 main.py 150 paper zipf train"
+        os.system(cmd)
+        cmd = "python3 main.py 150 new zipf train"
+        os.system(cmd)
         cmd = "python3 main.py 150 paper zipf online"
         os.system(cmd)
         cmd = "python3 main.py 150 new zipf online"

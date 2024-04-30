@@ -22,10 +22,10 @@ class wolpertinger:
     def offline_train(self, max_episodes):
         #check whether there are existed trained model
         if self.model == "original":
-            if(os.path.isfile("offline_model/actor_original.h5")):
+            if(os.path.isfile("offline_model/actor1_original.h5")):
                 self.ddpg.load_model_original()
         else:
-            if(os.path.isfile("offline_model/actor.h5")):
+            if(os.path.isfile("offline_model/actor1.h5")):
                 self.ddpg.load_model_proposed()
 
         episodes, done = 0, False
