@@ -49,17 +49,29 @@ if __name__ == "__main__":
         os.system(cmd)
         """
     if dataset == 2:
-        cmd = "python3 main.py 150 paper zipf train"
+        cmd = "python3 main.py 150 original zipf offline"
         os.system(cmd)
-        cmd = "python3 main.py 150 new zipf train"
+        cmd = "python3 main.py 150 proposed zipf offline"
         os.system(cmd)
-        cmd = "python3 main.py 150 paper zipf online"
+        cmd = "python3 main.py 150 original zipf online"
         os.system(cmd)
-        cmd = "python3 main.py 150 new zipf online"
+        cmd = "python3 main.py 150 proposed zipf online"
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
     
+    if dataset == 1:
+        cmd = "python3 main.py 150 original varNor offline"
+        os.system(cmd)
+        cmd = "python3 main.py 150 proposed varNor offline"
+        os.system(cmd)
+        cmd = "python3 main.py 150 original varNor online"
+        os.system(cmd)
+        cmd = "python3 main.py 150 proposed varNor online"
+        os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
+
     if dataset == 3:
         cmd = "rm new_hitrate.txt paper_hitrate.txt"
         os.system(cmd)
