@@ -75,14 +75,11 @@ if __name__ == "__main__":
         os.system(cmd)
 
     if dataset == 3:
-        cmd = "rm new_hitrate.txt paper_hitrate.txt"
+        cmd = "python3 main.py 150 original varNor online"
         os.system(cmd)
-        cmd = "touch new_hitrate.txt paper_hitrate.txt"
+        cmd = "python3 main.py 150 proposed varNor online"
         os.system(cmd)
-        for i in range(10):
-            cmd = "python3 main.py 150 paper zipf online"
-            os.system(cmd)
-            cmd = "python3 main.py 150 new zipf online"
-            os.system(cmd)
+        cmd = "python3 plotGraph.py"
+        os.system(cmd)
         
 
