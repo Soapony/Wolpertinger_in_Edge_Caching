@@ -67,7 +67,7 @@ class cache_env():
             next_state, done = self.get_next_state()
 
         reward = 0.
-        if self.model == "original":
+        if self.model == "original" or True:    #ablation test for reward funciton changing
             reward = tmp_reward         #original framework's reward
         else:
             reward = tmp_reward - self.previous_reward  #proposed reward mechnism
@@ -117,6 +117,8 @@ class cache_env():
             #no more next state, get a latest feature state to avoid Error
             done = True
         else:
+            #reverse change
+            return self.get_state_space(cur_req_item_feature), done
             #count the features of the current request content in the most recent 10,100,1000 requests
             content_id = self.all_requests[self.cur_req_ind]
             short_term = self.terms[0]
