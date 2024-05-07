@@ -67,7 +67,7 @@ class cache_env():
             next_state, done = self.get_next_state()
 
         reward = 0.
-        if self.model == "original" or True:    #ablation test for reward funciton changing
+        if self.model == "original":
             reward = tmp_reward         #original framework's reward
         else:
             reward = tmp_reward - self.previous_reward  #proposed reward mechnism

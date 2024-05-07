@@ -72,7 +72,7 @@ class ddpg:
         with tf.GradientTape() as tape:
             q_values = self.critic.model([states, actions])
             critic_loss = None
-            if self.framework == "original":
+            if self.framework == "original" or True:    #ablation test
                 critic_loss = tf.keras.losses.MSE(target_q_values, q_values)
             else:
                 h = tf.keras.losses.Huber()
