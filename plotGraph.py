@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.ticker as mtick
 
 #plot the graph of two approaches' cahce hit rates in the whole online phase
 if __name__ == "__main__":
@@ -14,13 +15,13 @@ if __name__ == "__main__":
         length = len(line)
         tmp = line[1:length-2]
         tmp = tmp.split(", ")
-        tmp = [float(x) for x in tmp]
+        tmp = [round(float(x)*100,2) for x in tmp]
         history = history + tmp
     for line in lines2:
         length = len(line)
         tmp = line[1:length-2]
         tmp = tmp.split(", ")
-        tmp = [float(x) for x in tmp]
+        tmp = [round(float(x)*100,2) for x in tmp]
         history2 = history2 + tmp
     
     #clip the range from 1000th request to the end
@@ -29,6 +30,7 @@ if __name__ == "__main__":
     x = np.arange(len(history))
     x = x+1000
     #plot the cache hit rate by matplotlib.pyplot module
+    plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1.0))
     plt.plot(x,history,label="original framework")
     plt.plot(x,history2,label="proposed algorithm")
     plt.legend()
