@@ -15,13 +15,13 @@ if __name__ == "__main__":
         length = len(line)
         tmp = line[1:length-2]
         tmp = tmp.split(", ")
-        tmp = [round(float(x)*100,2) for x in tmp]
+        tmp = [round(float(x),2) for x in tmp]
         history = history + tmp
     for line in lines2:
         length = len(line)
         tmp = line[1:length-2]
         tmp = tmp.split(", ")
-        tmp = [round(float(x)*100,2) for x in tmp]
+        tmp = [round(float(x),2) for x in tmp]
         history2 = history2 + tmp
     
     #clip the range from 1000th request to the end
