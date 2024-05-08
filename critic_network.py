@@ -26,7 +26,7 @@ class critic_network:
         self.l_units2048 = 2048
 
         #create critic network based on the seclected DRL agent
-        if framework == "original":
+        if framework == "original" or True:
             self.model = self.create_original_critic_network()
         else:
             self.model = self.create_critic_network()
