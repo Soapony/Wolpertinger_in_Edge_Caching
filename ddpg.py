@@ -35,25 +35,25 @@ class ddpg:
         target_model.set_weights(target_paras)
     
     def save_model_proposed(self):
-        self.actor.model.save_weights('offline_model/actor1.h5')
-        self.critic.model.save_weights('offline_model/critic1.h5')
+        self.actor.model.save_weights('offline_model/actor.h5')
+        self.critic.model.save_weights('offline_model/critic.h5')
     
     def save_model_original(self):
-        self.actor.model.save_weights('offline_model/actor1_original.h5')
-        self.critic.model.save_weights('offline_model/critic1_original.h5')
+        self.actor.model.save_weights('offline_model/actor_original.h5')
+        self.critic.model.save_weights('offline_model/critic_original.h5')
     
     def load_model_proposed(self):
-        self.actor.model.load_weights('offline_model/actor1.h5')
-        self.actor_t.model.load_weights('offline_model/actor1.h5')
-        self.critic.model.load_weights('offline_model/critic1.h5')
-        self.critic.model.load_weights('offline_model/critic1.h5')
+        self.actor.model.load_weights('offline_model/actor.h5')
+        self.actor_t.model.load_weights('offline_model/actor.h5')
+        self.critic.model.load_weights('offline_model/critic.h5')
+        self.critic.model.load_weights('offline_model/critic.h5')
 
     
     def load_model_original(self):
-        self.actor.model.load_weights('offline_model/actor1_original.h5')
-        self.actor_t.model.load_weights('offline_model/actor1_original.h5')
-        self.critic.model.load_weights('offline_model/critic1_original.h5')
-        self.critic.model.load_weights('offline_model/critic1_original.h5')
+        self.actor.model.load_weights('offline_model/actor_original.h5')
+        self.actor_t.model.load_weights('offline_model/actor_original.h5')
+        self.critic.model.load_weights('offline_model/critic_original.h5')
+        self.critic.model.load_weights('offline_model/critic_original.h5')
 
     
     #DDPG replay function, memorize from brain(replay buffer), then calculate the loss and gradient, then update parameters
