@@ -118,7 +118,7 @@ class cache_env():
             done = True
         else:
             #reverse change
-            return self.get_state_space(cur_req_item_feature), done
+            #return self.get_state_space(cur_req_item_feature), done
             #count the features of the current request content in the most recent 10,100,1000 requests
             content_id = self.all_requests[self.cur_req_ind]
             short_term = self.terms[0]

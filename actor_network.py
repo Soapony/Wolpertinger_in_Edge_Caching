@@ -34,7 +34,7 @@ class actor_network:
         self.epsilon_decay = 1e-6
         
         #create actor network based on selected DRL agent
-        if framework == "original" or True:
+        if framework == "original":
             self.model = self.create_original_actor_network()
         else:
             self.model = self.create_actor_network()
