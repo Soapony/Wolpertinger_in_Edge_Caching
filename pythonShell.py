@@ -7,47 +7,17 @@ if __name__ == "__main__":
     dataset = int(args[1])
         
     if dataset == 4:
-        for i in range(15):
-            cmd = "python3 main.py 150 paper zipf train"
+        for i in range(3):
+            cmd = "python3 main.py 150 proposed mix offline"
             os.system(cmd)
-            cmd = "python3 main.py 150 new zipf train"
+            cmd = "python3 main.py 150 original mix offline"
             os.system(cmd)
-            #cmd = "python3 main.py 150 paper varNor train"
-            #os.system(cmd)
-            #cmd = "python3 main.py 150 new varNor train"
-            #os.system(cmd)
-            #cmd = "python3 main.py 150 paper 2varNor train"
-            #os.system(cmd)
-            #cmd = "python3 main.py 150 new 2varNor train"
-            #os.system(cmd)
-        
-        cmd = "python3 main.py 150 paper zipf online"
+        cmd = "python3 main.py 150 original mix online"
         os.system(cmd)
-        cmd = "python3 main.py 150 new zipf online"
+        cmd = "python3 main.py 150 proposed mix online"
         os.system(cmd)
         cmd = "python3 plotGraph.py"
         os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_zipf_online.png"
-        os.system(cmd)
-        """
-        cmd = "python3 main.py 150 paper varNor online"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new varNor online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py 1"
-        os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/C150_varNor_online.png"
-        os.system(cmd)
-        
-        cmd = "python3 main.py 150 paper 2varNor online"
-        os.system(cmd)
-        cmd = "python3 main.py 150 new 2varNor online"
-        os.system(cmd)
-        cmd = "python3 plotGraph.py 1"
-        os.system(cmd)
-        cmd = "mv result/hitrate_compare.png result/hitrate_respond_speed.png"
-        os.system(cmd)
-        """
     if dataset == 2:
         for i in range(3):
             cmd = "python3 main.py 150 original zipf offline"
