@@ -19,7 +19,7 @@ if __name__ == "__main__":
         cmd = "python3 plotGraph.py"
         os.system(cmd)
     if dataset == 2:
-        for i in range(3):
+        for i in range(5):
             cmd = "python3 main.py 150 original zipf offline"
             os.system(cmd)
             cmd = "python3 main.py 150 proposed zipf offline"
