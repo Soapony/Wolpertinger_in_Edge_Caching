@@ -5,7 +5,7 @@ import sys
 
 #offline phase training
 def offline(cache_size, model, dataset):
-    max_episodes = 3
+    max_episodes = 15
     tau = 0.1
     knn = 0.1
     reward_fac = 0.9

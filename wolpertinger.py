@@ -88,12 +88,10 @@ class wolpertinger:
             current_state = next_state
         
         #save the learned parameters from the online phase
-        """
         if self.model == "original":
             self.ddpg.save_model_original()
         else:
             self.ddpg.save_model_proposed()
-        """
         
         cur_hit_rate = self.env.get_hit_rate()
         print("hit rate:"+str(cur_hit_rate))
